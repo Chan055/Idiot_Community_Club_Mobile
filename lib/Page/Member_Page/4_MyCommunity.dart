@@ -24,7 +24,6 @@ class _MyCommunityState extends State<MyCommunity> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Barcomponents.idiotBar(screen),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -97,7 +96,6 @@ class _MyCommunityState extends State<MyCommunity> {
           ),
         ],
       ),
-      bottomNavigationBar: Barcomponents.getIdiotCommunityNav(screen, context),
     );
   }
 }

@@ -17,7 +17,9 @@ class _CommunityMemberHomeState extends State<CommunityMemberHome> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Barcomponents.idiotBar(screen),
+          SizedBox(
+            height: 20,
+          ),
           Barcomponents.getIdiotSearchBar(text: "Search Community"),
           Expanded(
             child: SingleChildScrollView(
@@ -82,7 +84,6 @@ class _CommunityMemberHomeState extends State<CommunityMemberHome> {
           ),
         ],
       ),
-      bottomNavigationBar: Barcomponents.getIdiotCommunityNav(screen, context),
     );
   }
 }

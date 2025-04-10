@@ -21,11 +21,13 @@ import 'package:idiot_community_club_app/Page/Joined_Club_Page/2_JoinedClubMembe
 import 'package:idiot_community_club_app/Page/Main_Page/LuanchPage.dart';
 import 'package:idiot_community_club_app/Page/Main_Page/StartPage.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/0_MemberStartPage.dart';
+import 'package:idiot_community_club_app/Page/Member_Page/1.1_MemberRegister.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/1_MemberLogin.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/2_CommunityMemberHome.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/3_CommunityMemberRequest.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/4_MyCommunity.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/5_MemberProfile.dart';
+import 'package:idiot_community_club_app/Page/Member_Page/MemberMain.dart';
 import 'package:idiot_community_club_app/Page/My_Club_page/clubAnnouncement.dart';
 import 'package:idiot_community_club_app/Page/My_Club_page/clubDetail.dart';
 import 'package:idiot_community_club_app/Page/My_Club_page/clubMember.dart';
@@ -52,8 +54,9 @@ class IdiotRoutes {
     //MemberRoutes
     "/memberStartPage": (context) => MemberStartPage(),
     "/memberLogin": (context) => MemberLogin(),
+    "/memReg": (context) => MemberRegister(),
     // "/": (context) => CommunityMemberHome(),
-    "/communityMemberHome": (context) => CommunityMemberHome(),
+    "/communityMemberHome": (context) => MemberMainScreen(),
     "/comReqForm": (context) => CommunityMemberRequest(),
     "/myCommunity": (context) => MyCommunity(),
     "/memberProfile": (context) => MemberProfile(),

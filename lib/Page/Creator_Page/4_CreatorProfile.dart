@@ -19,7 +19,8 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
   File? _image;
 
   Future<void> _pickImage() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       final File selectedImage = File(pickedFile.path);
 
@@ -27,16 +28,19 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
         context: context,
         builder: (_) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             title: const Text("Confirm Profile Photo"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ClipOval(
-                  child: Image.file(selectedImage, width: 100, height: 100, fit: BoxFit.cover),
+                  child: Image.file(selectedImage,
+                      width: 100, height: 100, fit: BoxFit.cover),
                 ),
                 const SizedBox(height: 10),
-                const Text("Do you want to use this photo as your new profile picture?"),
+                const Text(
+                    "Do you want to use this photo as your new profile picture?"),
               ],
             ),
             actions: [
@@ -59,7 +63,6 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
     }
   }
 
-
   Future<void> _uploadPhoto(File imageFile) async {
     final creator = ref.read(creatorProvider);
     if (creator == null) return;
@@ -67,15 +70,16 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
     // You should upload to a real image hosting service. Here we simulate with path.
     final fakeUploadedUrl = imageFile.path;
 
-    final uri = Uri.parse("http://localhost:8080/api/creator/edit-profile?creatorId=${creator.id}&photo=$fakeUploadedUrl");
+    final uri = Uri.parse(
+        "http://localhost:8080/api/creator/edit-profile?creatorId=${creator.id}&photo=$fakeUploadedUrl");
     final response = await http.put(uri);
     final resBody = jsonDecode(response.body);
     print(resBody);
     setState(() {});
     if (resBody["success"] == true) {
       final updatedCreator = Creator.fromJson(resBody["data"]);
-      ref.read(creatorProvider.notifier).state = updatedCreator;
-
+      final updatedCreator1 = creator.copyWith(photo: updatedCreator.photo);
+      ref.read(creatorProvider.notifier).state = updatedCreator1;
       setState(() {}); // to refresh UI
 
       showDialog(
@@ -93,8 +97,7 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
           );
         },
       );
-    }
-    else {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to update photo")),
       );
@@ -133,12 +136,15 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
                         Container(
                           height: 100,
                           width: 100,
-                          decoration: const BoxDecoration(shape: BoxShape.circle),
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
                           child: ClipOval(
                             child: photoPath != null
                                 ? (photoPath.startsWith('http')
-                                ? Image.network(photoPath, fit: BoxFit.cover)
-                                : Image.file(File(photoPath), fit: BoxFit.cover))
+                                    ? Image.network(photoPath,
+                                        fit: BoxFit.cover)
+                                    : Image.file(File(photoPath),
+                                        fit: BoxFit.cover))
                                 : Image.asset("assets/images/IdiotLogo.png"),
                           ),
                         ),
@@ -146,8 +152,12 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Level:", style: TextStyle(color: Colors.white, fontSize: 12)),
-                            Text("Community Owner", style: TextStyle(color: Color(0xFFFFDC51), fontSize: 12)),
+                            Text("Level:",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12)),
+                            Text("Community Owner",
+                                style: TextStyle(
+                                    color: Color(0xFFFFDC51), fontSize: 12)),
                           ],
                         ),
                         const SizedBox(height: 10),
@@ -160,7 +170,8 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            child: ButtonComponents.myGradientLogo(Icons.edit_square),
+                            child: ButtonComponents.myGradientLogo(
+                                Icons.edit_square),
                           ),
                         ),
                       ],
@@ -173,9 +184,11 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
           Column(
             children: [
               const SizedBox(height: 20),
-              _getMyProfile(Icons.person_2_outlined, "Name: ${creator?.name ?? '-'}"),
+              _getMyProfile(
+                  Icons.person_2_outlined, "Name: ${creator?.name ?? '-'}"),
               _getMyLine(),
-              _getMyProfile(Icons.email_outlined, "Email: ${creator?.email ?? '-'}"),
+              _getMyProfile(
+                  Icons.email_outlined, "Email: ${creator?.email ?? '-'}"),
               _getMyLine(),
               InkWell(
                 onTap: () => Navigator.pushNamed(context, "/"),

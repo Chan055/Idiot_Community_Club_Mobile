@@ -41,7 +41,7 @@ class MemberStartPage extends StatelessWidget {
                       SizedBox(height: 10),
                       InkWell(
                         onDoubleTap: () {
-                          Navigator.pushNamed(context, "/comReg");
+                          Navigator.pushNamed(context, "/memReg");
                         },
                         child: ButtonComponents.getLogInBorder("Sign Up"),
                       ),
