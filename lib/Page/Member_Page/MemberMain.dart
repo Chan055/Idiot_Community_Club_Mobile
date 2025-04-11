@@ -91,7 +91,7 @@ class _MemberMainScreenState extends ConsumerState<MemberMainScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.people_outline_sharp),
-              label: 'Club',
+              label: 'MyCommunity',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outlined),

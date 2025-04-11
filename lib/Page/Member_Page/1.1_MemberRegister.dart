@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:http/http.dart' as http;
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'dart:convert';
 
 import 'package:idiot_community_club_app/Page/Member_Page/1_MemberLogin.dart';
@@ -36,7 +37,7 @@ class _MemberRegisterState extends State<MemberRegister> {
       return;
     }
 
-    final url = Uri.parse("http://localhost:8080/api/member/signup");
+    final url = Uri.parse("$BASE_URL/api/member/signup");
 
     final response = await http.post(
       url,

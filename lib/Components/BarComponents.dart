@@ -29,7 +29,7 @@ class Barcomponents {
           child: Row(
             children: [
               IconButton(
-                onPressed: () => Navigator.pushNamed(context, "/myCommunity"),
+                onPressed: () => Navigator.pop(context),
                 icon: Icon(Icons.arrow_back, color: Colors.white, size: 24),
               ),
               ClipOval(
@@ -182,21 +182,20 @@ class Barcomponents {
           children: [
             selectedIndex == index
                 ? Center(
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
-                )
+                  )
                 : Container(),
             Center(
-              child:
-                  selectedIndex == index
-                      ? ButtonComponents.myGradientLogo(icon)
-                      : Icon(icon, color: Colors.white, size: 30),
+              child: selectedIndex == index
+                  ? ButtonComponents.myGradientLogo(icon)
+                  : Icon(icon, color: Colors.white, size: 30),
             ),
           ],
         ),

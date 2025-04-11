@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'dart:convert';
 
 import '../../Providers/member_provider.dart';
@@ -20,7 +21,7 @@ class _MemberLoginState extends ConsumerState<MemberLogin> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> loginUser() async {
-    final url = Uri.parse("http://localhost:8080/api/member/login");
+    final url = Uri.parse("$BASE_URL/api/member/login");
 
     final response = await http.post(
       url,

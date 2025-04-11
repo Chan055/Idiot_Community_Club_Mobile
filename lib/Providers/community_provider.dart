@@ -1,6 +1,28 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:convert';
 
-final communityProvider = StateNotifierProvider<CommunityNotifier, List<Community>>((ref) {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:idiot_community_club_app/Models/Constant.dart';
+
+// final communityListProvider = FutureProvider<List<Community>>((ref) async {
+//   final uri = Uri.parse('$BASE_URL/api/member/view-all-communities');
+//   final response = await http.get(uri);
+
+//   if (response.statusCode == 200) {
+//     final resBody = jsonDecode(response.body);
+//     if (resBody['success'] == true) {
+//       List<dynamic> rawList = resBody['data'];
+//       return rawList.map((e) => Community.fromJson(e)).toList();
+//     } else {
+//       throw Exception(resBody['message']);
+//     }
+//   } else {
+//     throw Exception('Failed to fetch communities');
+//   }
+// });
+
+final communityProvider =
+    StateNotifierProvider<CommunityNotifier, List<Community>>((ref) {
   return CommunityNotifier();
 });
 
@@ -15,7 +37,6 @@ class CommunityNotifier extends StateNotifier<List<Community>> {
     state = [];
   }
 }
-
 
 class Community {
   final int id;

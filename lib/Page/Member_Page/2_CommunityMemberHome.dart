@@ -1,86 +1,73 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/BarComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
+import 'package:idiot_community_club_app/Providers/view_community_provider.dart';
 
-class CommunityMemberHome extends StatefulWidget {
+class CommunityMemberHome extends ConsumerStatefulWidget {
   const CommunityMemberHome({super.key});
 
   @override
-  State<CommunityMemberHome> createState() => _CommunityMemberHomeState();
+  ConsumerState<CommunityMemberHome> createState() =>
+      _CommunityMemberHomeState();
 }
 
-class _CommunityMemberHomeState extends State<CommunityMemberHome> {
+class _CommunityMemberHomeState extends ConsumerState<CommunityMemberHome> {
+  @override
+  void initState() {
+    super.initState();
+    fetchViewCommunities(ref);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final screen = MediaQuery.of(context).size;
+    final viewCommunities = ref.watch(viewCommunityStateProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Barcomponents.getIdiotSearchBar(text: "Search Community"),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () => Navigator.pushNamed(context, "/comReqForm"),
-                    child: Cardcomponent.idiotCommunityCard(
-                      clubName: "Tech Innovators",
-                      description:
-                          "A club for tech enthusiasts to discuss AI, software development, and the latest innovations in the industry.",
-                    ),
+            child: viewCommunities.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: viewCommunities.length,
+                    itemBuilder: (context, index) {
+                      final community = viewCommunities[index];
+                      return InkWell(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          "/comReqForm",
+                          arguments: community,
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          child: Cardcomponent.idiotCommunityCard(
+                              comName: community.name,
+                              description: community.description,
+                              comPhoto: (Uri.tryParse(community.image)
+                                              ?.hasAbsolutePath ==
+                                          true &&
+                                      (community.image.startsWith("http") ||
+                                          community.image.startsWith("https")))
+                                  ? Image.network(community.image,
+                                      fit: BoxFit.cover)
+                                  : (community.image.startsWith("/"))
+                                      ? Image.file(File(community.image),
+                                          fit: BoxFit.cover)
+                                      : Image.asset(
+                                          "assets/images/IdiotLogo.png",
+                                          fit: BoxFit.cover),
+                              memberCount: 100),
+                        ),
+                      );
+                    },
                   ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Bookworms Hub",
-                    description:
-                        "A place for book lovers to share and discuss their favorite books, authors, and genres.",
-                  ),
-                  Cardcomponent.idiotCommunityCard(
-                    clubName: "Fitness Warriors",
-                    description:
-                        "A club dedicated to health and fitness, where members share workout routines, diet plans, and motivation.",
-                  ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Gaming Legends",
-                    description:
-                        "Join us for exciting game nights, discussions about the latest gaming trends, and esports tournaments.",
-                  ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Photography Enthusiasts",
-                    description:
-                        "A creative space for photographers of all levels to share their work, learn new techniques, and collaborate.",
-                  ),
-                  Cardcomponent.idiotCommunityCard(
-                    clubName: "Culinary Artists",
-                    description:
-                        "A club for food lovers and aspiring chefs to exchange recipes, cooking tips, and explore different cuisines.",
-                  ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Travel Explorers",
-                    description:
-                        "A community of adventurers sharing travel experiences, tips, and destination guides.",
-                  ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Music Lovers",
-                    description:
-                        "Whether you're a musician or just a fan, this club is for sharing music, discovering new artists, and discussing trends.",
-                  ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Anime & Manga Fanatics",
-                    description:
-                        "A club for anime and manga lovers to discuss series, share recommendations, and explore Japanese pop culture.",
-                  ),
-                  Cardcomponent.idiotClubCard(
-                    clubName: "Entrepreneurs Network",
-                    description:
-                        "A space for aspiring and established entrepreneurs to network, share business ideas, and support each other.",
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
       ),

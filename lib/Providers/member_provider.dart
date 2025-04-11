@@ -14,6 +14,16 @@ class Member {
     this.photo,
   });
 
+  Member copyWith(
+      {String? name, String? email, String? photo, bool? hasCommunity}) {
+    return Member(
+      id: id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      photo: photo ?? this.photo,
+    );
+  }
+
   factory Member.fromJson(Map<String, dynamic> json) {
     return Member(
       id: json['_id'] ?? json['id'],

@@ -78,8 +78,9 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
     final resBody = jsonDecode(response.body);
     print(resBody);
     if (resBody["success"] == true) {
-      final updatedMember = Member.fromJson(resBody["data"]);
-      ref.read(memberProvider.notifier).state = updatedMember;
+      // final updatedMember = Member.fromJson(resBody["data"]["photo"]);
+      final updatedMember1 = member.copyWith(photo: resBody["data"]["photo"]);
+      ref.read(memberProvider.notifier).state = updatedMember1;
 
       setState(() {});
 
@@ -127,7 +128,6 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
                   ),
                 ),
               ),
-              SafeArea(child: Image.asset("assets/images/IdiotLogo.png")),
               SafeArea(
                 child: Container(
                   padding: const EdgeInsets.only(top: 60),
