@@ -4,8 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../../Providers/creator_provider.dart';
-
+import '../../Providers/Creator/creator_provider.dart';
 
 class CreatorLogin extends ConsumerStatefulWidget {
   const CreatorLogin({super.key});
@@ -44,19 +43,19 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
       // final creator1 = ref.watch(creatorProvider);
       // print(creator1?.name);
       print(ref.watch(creatorProvider)?.name);
-      ref.read(creatorProvider.notifier).state = Creator.fromJson(resBody["data"]);
+      ref.read(creatorProvider.notifier).state =
+          Creator.fromJson(resBody["data"]);
       print(ref.watch(creatorProvider)?.name);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("✅ ${resBody["message"]}")),
       );
 
-      ref.read(creatorProvider.notifier).state = Creator.fromJson(resBody["data"]);
+      ref.read(creatorProvider.notifier).state =
+          Creator.fromJson(resBody["data"]);
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/creatorMain');
       });
-
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Login failed: ${resBody["message"]}")),
@@ -86,27 +85,26 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
                   ),
                 ),
                 SizedBox(height: 70),
-
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(30)),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       gradientText("Log In", 25, FontWeight.bold),
-                      gradientText("Log in Now to join amazing clubs", 12, FontWeight.bold),
+                      gradientText("Log in Now to join amazing clubs", 12,
+                          FontWeight.bold),
                       SizedBox(height: 20),
-
                       gradientText("Email", 18, FontWeight.bold),
                       ScreenDeco.inputBox(
                         myController: emailController,
                         getInput: (_) {},
                         myLabel: "Enter Your Email",
                       ),
-
                       gradientText("Password", 18, FontWeight.bold),
                       ScreenDeco.inputBox(
                         myController: passwordController,
@@ -118,7 +116,6 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
                           setState(() => showPassword = !showPassword);
                         },
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -126,7 +123,6 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
                           SizedBox(width: 15),
                         ],
                       ),
-
                       SizedBox(height: 10),
                       InkWell(
                         onTap: loginUser,
@@ -136,17 +132,18 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
                           myRadius: 12,
                         ),
                       ),
-
                       SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Don't have account?", style: TextStyle(fontSize: 12)),
+                          Text("Don't have account?",
+                              style: TextStyle(fontSize: 12)),
                           InkWell(
                             onTap: () {
                               Navigator.pushNamed(context, "/comReg");
                             },
-                            child: gradientText("Register Now", 12, FontWeight.bold),
+                            child: gradientText(
+                                "Register Now", 12, FontWeight.bold),
                           ),
                         ],
                       ),
@@ -182,10 +179,10 @@ class ScreenDeco {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF52C8FF), Color(0xFF6A84EB)],
-            begin: Alignment.centerRight,
-            end: Alignment.centerLeft,
-          )),
+        colors: [Color(0xFF52C8FF), Color(0xFF6A84EB)],
+        begin: Alignment.centerRight,
+        end: Alignment.centerLeft,
+      )),
       child: child,
     );
   }
@@ -213,11 +210,11 @@ class ScreenDeco {
         decoration: InputDecoration(
           suffixIcon: password
               ? IconButton(
-            onPressed: togglePassword,
-            icon: myObsecure
-                ? Icon(Icons.visibility)
-                : Icon(Icons.visibility_off),
-          )
+                  onPressed: togglePassword,
+                  icon: myObsecure
+                      ? Icon(Icons.visibility)
+                      : Icon(Icons.visibility_off),
+                )
               : null,
           labelText: myLabel,
           labelStyle: TextStyle(fontSize: 12),

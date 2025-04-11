@@ -18,7 +18,7 @@ class _JoinedClubState extends State<JoinedClub> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Barcomponents.idiotClubBar(screen, context),
+          // Barcomponents.idiotClubBar(screen, context),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,8 +33,8 @@ class _JoinedClubState extends State<JoinedClub> {
               child: Column(
                 children: [
                   InkWell(
-                    onTap:
-                        () => Navigator.pushNamed(context, "/viewAnnouncement"),
+                    onTap: () =>
+                        Navigator.pushNamed(context, "/viewAnnouncement"),
                     child: Cardcomponent.idiotClubCard(
                       clubName: "Yoga Class",
                       description:
@@ -92,7 +92,7 @@ class _JoinedClubState extends State<JoinedClub> {
           ),
         ],
       ),
-      bottomNavigationBar: Barcomponents.getIdiotClubNav(screen, context),
+      // bottomNavigationBar: Barcomponents.getIdiotClubNav(screen, context),
     );
   }
 }
