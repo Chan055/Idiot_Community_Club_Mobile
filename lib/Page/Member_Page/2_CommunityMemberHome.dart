@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/BarComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
-import 'package:idiot_community_club_app/Providers/view_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/view_community_provider.dart';
 
 class CommunityMemberHome extends ConsumerStatefulWidget {
   const CommunityMemberHome({super.key});

@@ -18,7 +18,7 @@ class _MyClubState extends State<MyClub> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Barcomponents.idiotClubBar(screen, context),
+          // Barcomponents.idiotClubBar(screen, context),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -57,7 +57,7 @@ class _MyClubState extends State<MyClub> {
           ),
         ],
       ),
-      bottomNavigationBar: Barcomponents.getIdiotClubNav(screen, context),
+      // bottomNavigationBar: Barcomponents.getIdiotClubNav(screen, context),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:idiot_community_club_app/Page/Member_Page/2_CommunityMemberHome.
 import 'package:idiot_community_club_app/Page/Member_Page/4_MyCommunity.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/5_MemberProfile.dart';
 import '../../Components/ButtonComponents.dart';
-import '../../Providers/member_provider.dart';
+import '../../Providers/Member/member_provider.dart';
 
 class MemberMainScreen extends ConsumerStatefulWidget {
   const MemberMainScreen({super.key});

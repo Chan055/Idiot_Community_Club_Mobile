@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
-import '../../Providers/creator_provider.dart';
+import '../../Providers/Creator/creator_provider.dart';
 
 class CreatorProfile extends ConsumerStatefulWidget {
   const CreatorProfile({super.key});

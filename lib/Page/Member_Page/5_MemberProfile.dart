@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/BarComponents.dart';
-import '../../Providers/member_provider.dart';
+import '../../Providers/Member/member_provider.dart';
 
 class MemberProfile extends ConsumerStatefulWidget {
   const MemberProfile({super.key});

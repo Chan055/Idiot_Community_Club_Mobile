@@ -4,6 +4,7 @@ import 'package:idiot_community_club_app/Page/Club_Page/2_MyClubForm.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/3_MyCreatedClub.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/4_JoiedClubs.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/5_ClubRequest.dart';
+import 'package:idiot_community_club_app/Page/Club_Page/ClubMain.dart';
 import 'package:idiot_community_club_app/Page/Creator_Page/0_CreatorStartPage.dart';
 import 'package:idiot_community_club_app/Page/Creator_Page/1.1_ComReg.dart';
 import 'package:idiot_community_club_app/Page/Creator_Page/1_CreatorLogin.dart';
@@ -62,7 +63,7 @@ class IdiotRoutes {
     "/memberProfile": (context) => MemberProfile(),
 
     //ClubRoutes
-    "/clubHome": (context) => ClubHome(),
+    "/clubHome": (context) => ClubMainScreen(),
     "/myClub": (context) => MyClub(),
     "/myClubForm": (context) => MyClubForm(),
     "/myCreatedClub": (context) => MyCreatedClub(),

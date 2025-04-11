@@ -3,19 +3,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import '../../Components/BarComponents.dart';
 import '../../Components/ButtonComponents.dart';
 import '../../Components/CardComponents.dart';
-import '../../Providers/community_provider.dart';
-import '../../Providers/creator_provider.dart';
+
+import '../../Providers/Creator/creator_provider.dart';
 
 class CommunityHomeCreate extends ConsumerStatefulWidget {
   const CommunityHomeCreate({super.key});
 
   @override
-  ConsumerState<CommunityHomeCreate> createState() => _CommunityHomeCreateState();
+  ConsumerState<CommunityHomeCreate> createState() =>
+      _CommunityHomeCreateState();
 }
 
 class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
@@ -25,7 +27,8 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
   final TextEditingController descriptionController = TextEditingController();
 
   Future<void> _pickImageFromGallery() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() => image = File(pickedFile.path));
     }
@@ -50,15 +53,15 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
     );
 
     final resBody = jsonDecode(response.body);
+    print(resBody);
     if (resBody["success"] == true) {
       final newCommunity = Community.fromJson(resBody["data"]);
-      ref.read(communityProvider.notifier).addCommunity(newCommunity);
+      ref.read(communityProvider.notifier).state = newCommunity;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("✅ ${resBody["message"]}")),
       );
       final updatedCreator = creator.copyWith(hasCommunity: true);
       ref.read(creatorProvider.notifier).state = updatedCreator;
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed: ${resBody["message"]}")),
@@ -100,7 +103,9 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -111,19 +116,20 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none),
                   ),
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    print("hello");
                     if (image != null) {
-                      print("hi");
                       _createCommunity(image!);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("❌ Please select an image")),
+                        const SnackBar(
+                            content: Text("❌ Please select an image")),
                       );
                     }
                   },

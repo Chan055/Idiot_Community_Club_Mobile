@@ -181,6 +181,77 @@ class Cardcomponent {
     );
   }
 
+  static Container idiotClubCard1({
+    required String clubName,
+    required String description,
+    required String clubLogo,
+    required int totalMembers,
+  }) {
+    return Container(
+      height: 200,
+      width: 315,
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.only(bottom: 20),
+      decoration: Cardcomponent.cardBackDecoration,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              ClipOval(
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  color: Colors.white,
+                  child: clubLogo.startsWith("http")
+                      ? Image.network(clubLogo, fit: BoxFit.cover)
+                      : Image.asset("assets/images/Capi.png",
+                          fit: BoxFit.cover),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(clubName, style: Cardcomponent.clubTitleStyle),
+                    const SizedBox(height: 2),
+                    RichText(
+                      text: TextSpan(
+                        text: "Club Members  ",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10,
+                          color: Colors.white,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: totalMembers.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 12,
+                              color: Color(0xFFFFDC51),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Cardcomponent.descriptionBox(
+            text: description,
+            height: 100,
+            width: 275,
+          ),
+        ],
+      ),
+    );
+  }
+
   static Container idiotCommunityCard(
       {required comName,
       required description,

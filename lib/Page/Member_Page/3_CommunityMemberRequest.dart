@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
-import 'package:idiot_community_club_app/Providers/community_provider.dart';
-import 'package:idiot_community_club_app/Providers/member_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:idiot_community_club_app/Providers/view_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/view_community_provider.dart';
 
 class CommunityMemberRequest extends ConsumerStatefulWidget {
   const CommunityMemberRequest({super.key});

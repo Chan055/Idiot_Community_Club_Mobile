@@ -6,7 +6,7 @@ import 'package:idiot_community_club_app/Page/Creator_Page/4_CreatorProfile.dart
 import 'package:idiot_community_club_app/Page/Creator_Page/5_CommunityMember.dart';
 import 'package:idiot_community_club_app/Page/Creator_Page/6_CommunityClub.dart';
 import '../../Components/ButtonComponents.dart';
-import '../../Providers/creator_provider.dart';
+import '../../Providers/Creator/creator_provider.dart';
 
 class CreatorMainScreen extends ConsumerStatefulWidget {
   const CreatorMainScreen({super.key});
@@ -50,7 +50,6 @@ class _CreatorMainScreenState extends ConsumerState<CreatorMainScreen> {
       const CommunityClub(),
       const CreatorProfile(),
     ];
-
 
     return Scaffold(
       appBar: PreferredSize(

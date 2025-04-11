@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
-import 'package:idiot_community_club_app/Providers/member_provider.dart';
-import 'package:idiot_community_club_app/Providers/my_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/my_community_provider.dart';
 
 class MyCommunity extends ConsumerStatefulWidget {
   const MyCommunity({super.key});
