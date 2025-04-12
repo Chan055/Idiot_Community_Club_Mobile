@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/0_ClubHome.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/2_MyClubForm.dart';
+import 'package:idiot_community_club_app/Page/Club_Page/3_MyCreatedClub.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/4_JoiedClubs.dart';
+import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
 
-class ClubMainScreen extends StatefulWidget {
+class ClubMainScreen extends ConsumerStatefulWidget {
   const ClubMainScreen({super.key});
 
   @override
-  State<ClubMainScreen> createState() => _ClubMainScreenState();
+  ConsumerState<ClubMainScreen> createState() => _ClubMainScreenState();
 }
 
-class _ClubMainScreenState extends State<ClubMainScreen> {
+class _ClubMainScreenState extends ConsumerState<ClubMainScreen> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -20,14 +23,24 @@ class _ClubMainScreenState extends State<ClubMainScreen> {
     });
   }
 
-  final List<Widget> _screens = [
-    const ClubHome(),
-    const MyClubForm(),
-    const JoinedClub(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final currentCommunity = ref.watch(currentCommunityProvider);
+
+    if (currentCommunity == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final isLeader = currentCommunity.isLeader;
+
+    final List<Widget> _screens = [
+      const ClubHome(),
+      isLeader ==true? const MyCreatedClub() : const MyClubForm(),
+      const JoinedClub(),
+    ];
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),

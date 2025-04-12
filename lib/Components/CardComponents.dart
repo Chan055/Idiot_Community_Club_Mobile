@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/TextComponents.dart';
@@ -203,8 +205,8 @@ class Cardcomponent {
                   height: 60,
                   width: 60,
                   color: Colors.white,
-                  child: clubLogo.startsWith("http")
-                      ? Image.network(clubLogo, fit: BoxFit.cover)
+                  child: clubLogo != null
+                      ? Image.file(File(clubLogo), fit: BoxFit.cover)
                       : Image.asset("assets/images/Capi.png",
                           fit: BoxFit.cover),
                 ),

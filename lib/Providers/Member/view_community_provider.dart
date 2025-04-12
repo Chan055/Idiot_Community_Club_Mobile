@@ -20,8 +20,6 @@ Future<void> fetchViewCommunities(WidgetRef ref) async {
     } else {
       throw Exception(resBody['message'] ?? 'API returned false success');
     }
-  } else {
-    throw Exception('Failed to fetch communities');
   }
 }
 

@@ -1,16 +1,71 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
+import 'package:idiot_community_club_app/Providers/Club/my_all_club_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 
-class ClubRequest extends StatefulWidget {
+class ClubRequest extends ConsumerStatefulWidget {
   const ClubRequest({super.key});
 
   @override
-  State<ClubRequest> createState() => _ClubRequestState();
+  ConsumerState<ClubRequest> createState() => _ClubRequestState();
 }
 
-class _ClubRequestState extends State<ClubRequest> {
+class _ClubRequestState extends ConsumerState<ClubRequest> {
+  final TextEditingController reasonController = TextEditingController();
+
+  @override
+  void dispose() {
+    reasonController.dispose();
+    super.dispose();
+  }
+
+  Future<void> submitClubRequest(int clubId) async {
+    final member = ref.read(memberProvider);
+    final currentCommunity = ref.read(currentCommunityProvider);
+    final userId = member?.id;
+    final communityId = currentCommunity?.communityId;
+
+    final uri = Uri.parse('$BASE_URL/api/member/join-club');
+    final body = {
+      "clubId": clubId,
+      "communityId": communityId,
+      "userId": userId,
+      "reasonToJoin": reasonController.text,
+    };
+
+    try {
+      final response = await http.post(
+        uri,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(body),
+      );
+
+      final resBody = jsonDecode(response.body);
+      if (resBody["success"] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("✅ ${resBody["message"]}")),
+        );
+        Navigator.pop(context);
+      } else {
+        throw Exception(resBody["message"]);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("❌ Failed: $e")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final club = ModalRoute.of(context)!.settings.arguments as Club;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -36,11 +91,11 @@ class _ClubRequestState extends State<ClubRequest> {
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Image.asset("assets/images/RedPanda.jpeg"),
+                        child: Image.asset(club.clubLogo),
                       ),
                     ),
                     Text(
-                      "Chess Club",
+                      club.clubName,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -58,7 +113,7 @@ class _ClubRequestState extends State<ClubRequest> {
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
                       child: Text(
-                        "Hello I am kit hello I am kit hello I am kithello I am kit hello I am kit",
+                        club.clubDescription,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
@@ -107,6 +162,7 @@ class _ClubRequestState extends State<ClubRequest> {
                                     ),
                                     child: Form(
                                       child: TextFormField(
+                                        controller: reasonController,
                                         cursorColor: Colors.white,
                                         maxLines: 3,
                                         style: TextStyle(color: Colors.white),
@@ -131,10 +187,13 @@ class _ClubRequestState extends State<ClubRequest> {
                               margin: EdgeInsets.only(top: 50),
                               height: 40,
                               width: 100,
-                              child: ButtonComponents.getGradientBox(
-                                text: "Request",
-                                size: 15,
-                                myRadius: 12,
+                              child: GestureDetector(
+                                onTap: () => submitClubRequest(club.clubId),
+                                child: ButtonComponents.getGradientBox(
+                                  text: "Request",
+                                  size: 15,
+                                  myRadius: 12,
+                                ),
                               ),
                             ),
                           ],

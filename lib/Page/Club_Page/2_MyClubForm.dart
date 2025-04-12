@@ -1,20 +1,28 @@
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
 
-class MyClubForm extends StatefulWidget {
+class MyClubForm extends ConsumerStatefulWidget {
   const MyClubForm({super.key});
 
   @override
-  State<MyClubForm> createState() => _MyClubFormState();
+  ConsumerState<MyClubForm> createState() => _MyClubFormState();
 }
 
-class _MyClubFormState extends State<MyClubForm> {
+class _MyClubFormState extends ConsumerState<MyClubForm> {
   File? image;
-  final ImagePicker _picker = ImagePicker(); // Initialize ImagePicker
+  final ImagePicker _picker = ImagePicker();
+  final TextEditingController clubNameController = TextEditingController();
+  final TextEditingController reasonController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   Future<void> _pickImageFromGallery() async {
     final XFile? pickedFile = await _picker.pickImage(
@@ -23,9 +31,58 @@ class _MyClubFormState extends State<MyClubForm> {
 
     if (pickedFile != null) {
       setState(() {
-        image = File(pickedFile.path); // Convert XFile to File
+        image = File(pickedFile.path);
       });
     }
+  }
+
+  Future<void> _submitClubForm() async {
+    final member = ref.read(memberProvider);
+    final currentCommunity = ref.read(currentCommunityProvider);
+
+    if (member == null || currentCommunity == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("❌ Missing user or community info")),
+      );
+      return;
+    }
+
+    final uri = Uri.parse("$BASE_URL/api/member/create-my-club");
+    final body = {
+      "userId": member.id,
+      "communityId": currentCommunity.communityId,
+      "clubName": clubNameController.text.trim(),
+      "clubDescription": descriptionController.text.trim(),
+      "clubLogo": image?.path ?? "https://example.com/gaming.jpg",
+      "reasonToCreateClub": reasonController.text.trim(),
+    };
+
+    final response = await http.post(
+      uri,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
+    );
+
+    final resBody = jsonDecode(response.body);
+    if (resBody["success"] == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Success ${resBody["message"]}")),
+      );
+      final updatedCreator = currentCommunity.copyWith(isLeader: true);
+      ref.read(currentCommunityProvider.notifier).state = updatedCreator;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("❌ Failed: ${resBody["message"]}")),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    clubNameController.dispose();
+    reasonController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -77,6 +134,7 @@ class _MyClubFormState extends State<MyClubForm> {
                         Text("Club Name",
                             style: TextStyle(color: Colors.white)),
                         TextFormField(
+                          controller: clubNameController,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -98,6 +156,7 @@ class _MyClubFormState extends State<MyClubForm> {
                           style: TextStyle(color: Colors.white),
                         ),
                         TextFormField(
+                          controller: reasonController,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -119,6 +178,7 @@ class _MyClubFormState extends State<MyClubForm> {
                           style: TextStyle(color: Colors.white),
                         ),
                         TextFormField(
+                          controller: descriptionController,
                           maxLines: 3,
                           decoration: InputDecoration(
                             filled: true,
@@ -139,7 +199,15 @@ class _MyClubFormState extends State<MyClubForm> {
                         Center(
                           child: InkWell(
                             onDoubleTap: () {
-                              Navigator.pushNamed(context, "/myCreatedClub");
+                              if (image != null) {
+                                _submitClubForm();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text("❌ Please select an image")),
+                                );
+                              }
                             },
                             child: Container(
                               height: 40,

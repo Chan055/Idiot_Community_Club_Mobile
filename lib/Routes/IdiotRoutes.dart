@@ -63,7 +63,7 @@ class IdiotRoutes {
     "/memberProfile": (context) => MemberProfile(),
 
     //ClubRoutes
-    "/clubHome": (context) => ClubMainScreen(),
+    "/clubMain": (context) => ClubMainScreen(),
     "/myClub": (context) => MyClub(),
     "/myClubForm": (context) => MyClubForm(),
     "/myCreatedClub": (context) => MyCreatedClub(),

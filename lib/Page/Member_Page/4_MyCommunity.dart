@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
+import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
-import 'package:idiot_community_club_app/Providers/Member/my_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';
 
 class MyCommunity extends ConsumerStatefulWidget {
   const MyCommunity({super.key});
@@ -60,8 +61,12 @@ class _MyCommunityState extends ConsumerState<MyCommunity> {
                         }
 
                         return InkWell(
-                          onTap: () =>
-                              Navigator.pushNamed(context, "/clubHome"),
+                          onTap: () {
+                            ref.read(currentCommunityProvider.notifier).state =
+                                community;
+                            Navigator.pushNamed(context, "/clubMain",
+                                arguments: community.communityId);
+                          },
                           child: Cardcomponent.idiotCommunityCard(
                             comName: community.communityName,
                             description: community.description,

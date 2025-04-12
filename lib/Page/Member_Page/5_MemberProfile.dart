@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,6 +19,16 @@ class MemberProfile extends ConsumerStatefulWidget {
 class _MemberProfileState extends ConsumerState<MemberProfile> {
   final ImagePicker _picker = ImagePicker();
   File? _image;
+
+  void logout(WidgetRef ref, BuildContext context) {
+    // Clear local storage, tokens, etc.
+
+    // Clear community list
+    ref.read(myCommunityListProvider.notifier).state = [];
+
+    // Navigate to login
+    Navigator.pushReplacementNamed(context, '/');
+  }
 
   Future<void> _pickImage() async {
     final XFile? pickedFile =
@@ -192,7 +203,7 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
                   Icons.email_outlined, "Email: ${member?.email ?? '-'}"),
               _getMyLine(),
               InkWell(
-                onTap: () => Navigator.pushNamed(context, "/"),
+                onTap: () => logout(ref, context),
                 child: _getMyProfile(Icons.logout, "Logout"),
               ),
               _getMyLine(),
