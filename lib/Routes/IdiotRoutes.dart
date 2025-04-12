@@ -46,7 +46,7 @@ class IdiotRoutes {
     "/communityHomeCreate": (context) => CommunityHomeCreate(),
     "/home": (context) => CommunityHome(),
     // "/profile": (context) => CreatorProfile(creatorId: widget.creatorId),
-    "/member": (context) => CommunityMember(),
+    "/member": (context) => CommunityMemberrequest(),
     "/club": (context) => CommunityClub(),
     "/clubCreateReview": (context) => ClubCreateReview(),
     "/communityMemberList": (context) => CommunityMemberList(),

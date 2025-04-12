@@ -46,7 +46,7 @@ class _CreatorMainScreenState extends ConsumerState<CreatorMainScreen> {
     final hasCommunity = creator.hasCommunity;
     final screens = [
       hasCommunity ? const CommunityHome() : const CommunityHomeCreate(),
-      const CommunityMember(),
+      const CommunityMemberrequest(),
       const CommunityClub(),
       const CreatorProfile(),
     ];
