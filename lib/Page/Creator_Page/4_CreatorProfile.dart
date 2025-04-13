@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -74,7 +75,7 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
     final fakeUploadedUrl = imageFile.path;
 
     final uri = Uri.parse(
-        "http://localhost:8080/api/creator/edit-profile?creatorId=${creator.id}&photo=$fakeUploadedUrl");
+        "$BASE_URL/api/creator/edit-profile?creatorId=${creator.id}&photo=$fakeUploadedUrl");
     final response = await http.put(uri);
     final resBody = jsonDecode(response.body);
     print(resBody);

@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Providers/Creator/CommunityMembersProvider.dart';
 import 'package:idiot_community_club_app/Providers/Creator/club_proivider.dart';
 import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/creator_provider.dart';
 import '../../Components/BarComponents.dart';
 import '../../Components/ButtonComponents.dart';
 import '../../Components/CardComponents.dart';
@@ -20,7 +22,7 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
   void initState() {
     super.initState();
     final community = ref.read(communityProvider);
-    if (community != null) {
+    if (community != null ) {
       fetchClubs(ref, community.communityId);
     }
   }
@@ -29,7 +31,6 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
   Widget build(BuildContext context) {
     final community = ref.watch(communityProvider);
     final clubs = ref.watch(clubListProvider);
-    Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
       body: community == null
@@ -77,9 +78,10 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ButtonComponents.getMyGradientText(
-                                  "Community Members", 10.0),
+                                  "Community Members", 12.0),
+                                  SizedBox(width: 2,),
                               ButtonComponents.getMyGradientText(
-                                  "${community.clubCount}", 12.0),
+                                  "${community.memberCount}", 12.0),
                             ],
                           ),
                         ),

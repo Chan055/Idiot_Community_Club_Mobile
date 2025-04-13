@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:idiot_community_club_app/Components/ListTileRequst.dart';
-import 'package:idiot_community_club_app/Helper/Api.dart';
-import 'package:idiot_community_club_app/Models/RandomUser.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
+import 'package:idiot_community_club_app/Providers/Creator/CommunityMembersProvider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/creator_provider.dart';
 
-class CommunityMemberList extends StatefulWidget {
+class CommunityMemberList extends ConsumerStatefulWidget {
   const CommunityMemberList({super.key});
 
   @override
-  State<CommunityMemberList> createState() => _CommunityMemberListState();
+  ConsumerState<CommunityMemberList> createState() => _MyClubMemberState();
 }
 
-class _CommunityMemberListState extends State<CommunityMemberList> {
-  List<RandomUser> userList = [];
+class _MyClubMemberState extends ConsumerState<CommunityMemberList> {
 
-  loadUser() async {
-    List<RandomUser> listUser = await Api.getAllUser();
-    setState(() {
-      this.userList = listUser;
-    });
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadUser();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+      final community = ref.watch(communityProvider);
+      final creator= ref.watch(creatorProvider);
+      if (community != null && creator!=null) {
+        fetchCommunityMembers(ref, community.communityId, creator.id);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final members=ref.watch(communityMembersProvider);
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -46,7 +48,7 @@ class _CommunityMemberListState extends State<CommunityMemberList> {
             ),
           ),
         ),
-        title: Text("Community Members", style: TextStyle(color: Colors.white)),
+        title: Text("Club Members", style: TextStyle(color: Colors.white)),
 
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -59,12 +61,12 @@ class _CommunityMemberListState extends State<CommunityMemberList> {
         ),
       ),
       body:
-          userList.length > 0
+          members.length > 0
               ? ListView.builder(
-                itemCount: userList.length,
+                itemCount: members.length,
                 itemBuilder:
                     (context, index) =>
-                        ListTileComponent.getListTile_1(userList[index]),
+                        getListTile(members[index]),
               )
               : Center(
                 child: CircularProgressIndicator(
@@ -74,3 +76,23 @@ class _CommunityMemberListState extends State<CommunityMemberList> {
     );
   }
 }
+
+
+  Widget getListTile(CommunityMember user) {
+
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundImage:
+              getUserImage(user.userPhoto), // Local image fallback
+          onBackgroundImageError:
+              (_, __) => const Icon(Icons.person, size: 30, color: Colors.grey),
+        ),
+        title: Text(
+          "${user.userName}",
+        ),
+        trailing: Icon(Icons.more_vert, size: 25, color: Colors.black45),
+      ),
+    );
+  }

@@ -12,7 +12,7 @@ class Community {
   final String creatorName;
   final String creatorEmail;
   final int communityInfoId;
-  final int clubCount;
+  final int memberCount;
 
   Community({
     required this.communityId,
@@ -23,7 +23,7 @@ class Community {
     required this.creatorName,
     required this.creatorEmail,
     required this.communityInfoId,
-    required this.clubCount,
+    required this.memberCount,
   });
 
   factory Community.fromJson(Map<String, dynamic> json) {
@@ -36,7 +36,7 @@ class Community {
       creatorName: json['creatorName'],
       creatorEmail: json['creatorEmail'],
       communityInfoId: json['communityInfoId'],
-      clubCount: json['clubCount'],
+      memberCount: json['memberCount'],
     );
   }
 
@@ -50,7 +50,7 @@ class Community {
       'creatorName': creatorName,
       'creatorEmail': creatorEmail,
       'communityInfoId': communityInfoId,
-      'clubCount': clubCount,
+      'memberCount': memberCount,
     };
   }
 }
