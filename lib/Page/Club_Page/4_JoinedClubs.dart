@@ -52,18 +52,23 @@ class _JoinedClubState extends ConsumerState<JoinedClub> {
             ),
           ),
           isLoading
-              ? const Expanded(child: Center(child: CircularProgressIndicator()))
+              ? const Expanded(
+                  child: Center(child: CircularProgressIndicator()))
               : joinedClubs.isEmpty
-                  ? const Expanded(child: Center(child: Text("No clubs joined.")))
+                  ? const Expanded(
+                      child: Center(child: Text("No clubs joined.")))
                   : Expanded(
                       child: ListView.builder(
                         itemCount: joinedClubs.length,
                         itemBuilder: (context, index) {
                           final club = joinedClubs[index];
                           return InkWell(
-                            onTap: () => Navigator.pushNamed(context, "/viewAnnouncement"),
+                            onTap: () => Navigator.pushNamed(
+                                context, "/viewAnnouncement",
+                                arguments: club),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 45.0),
                               child: Cardcomponent.idiotClubCard1(
                                 clubName: club.clubName,
                                 description: club.clubDescription,
