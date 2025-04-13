@@ -4,7 +4,7 @@ import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/0_ClubHome.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/2_MyClubForm.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/3_MyCreatedClub.dart';
-import 'package:idiot_community_club_app/Page/Club_Page/4_JoiedClubs.dart';
+import 'package:idiot_community_club_app/Page/Club_Page/4_JoinedClubs.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';

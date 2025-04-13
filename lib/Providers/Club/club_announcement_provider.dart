@@ -17,7 +17,7 @@ class ClubAnnouncement {
 
   factory ClubAnnouncement.fromJson(Map<String, dynamic> json) {
     return ClubAnnouncement(
-      postId: json['id'],
+      postId: json['postId'],
       message: json['message'],
       createdAt: DateTime.parse(json['createdAt']),
     );
@@ -25,22 +25,26 @@ class ClubAnnouncement {
 }
 
 final clubAnnouncementProvider =
-    StateProvider<List<ClubAnnouncement>>((ref) => []);
+    FutureProvider.family<List<ClubAnnouncement>, (int, int)>(
+        (ref, tuple) async {
+  final leaderId = tuple.$1;
+  final clubId = tuple.$2;
 
-Future<void> fetchAnnouncements(WidgetRef ref, int memberId, int clubId) async {
-  final uri = Uri.parse("$BASE_URL/leader/view-own-post/$memberId/$clubId");
+  final uri = Uri.parse("$BASE_URL/api/leader/view-own-post/$leaderId/$clubId");
   final response = await http.get(uri);
   final data = jsonDecode(response.body);
+  print(data);
 
   if (data['success'] == true) {
     final List<ClubAnnouncement> announcements = (data['data'] as List)
         .map((e) => ClubAnnouncement.fromJson(e))
         .toList();
-    ref.read(clubAnnouncementProvider.notifier).state = announcements;
+    return announcements;
   } else {
+    print("leaderId: $leaderId, clubId: $clubId");
     throw Exception(data["message"]);
   }
-}
+});
 
 Future<void> postAnnouncement({
   required WidgetRef ref,
@@ -63,14 +67,10 @@ Future<void> postAnnouncement({
 
   final data = jsonDecode(response.body);
 
-  if (data['success'] == true) {
-    final newAnnouncement = ClubAnnouncement.fromJson(data['data']);
-    final current = ref.read(clubAnnouncementProvider);
-    ref.read(clubAnnouncementProvider.notifier).state = [
-      ...current,
-      newAnnouncement
-    ];
-  } else {
+  if (data['success'] != true) {
     throw Exception(data['message'] ?? 'Failed to post announcement');
   }
+
+  // Optionally refresh the provider after posting
+  ref.invalidate(clubAnnouncementProvider((leaderId, clubId)));
 }

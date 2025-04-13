@@ -2,7 +2,7 @@ import 'package:idiot_community_club_app/Page/Club_Page/0_ClubHome.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/1_CreateClub.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/2_MyClubForm.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/3_MyCreatedClub.dart';
-import 'package:idiot_community_club_app/Page/Club_Page/4_JoiedClubs.dart';
+import 'package:idiot_community_club_app/Page/Club_Page/4_JoinedClubs.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/5_ClubRequest.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/ClubMain.dart';
 import 'package:idiot_community_club_app/Page/Creator_Page/0_CreatorStartPage.dart';
