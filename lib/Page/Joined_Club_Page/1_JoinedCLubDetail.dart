@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
 
 class JoinedClubDetail extends StatefulWidget {
   const JoinedClubDetail({super.key});
@@ -10,6 +13,9 @@ class JoinedClubDetail extends StatefulWidget {
 class _JoinedClubDetailState extends State<JoinedClubDetail> {
   @override
   Widget build(BuildContext context) {
+    final JoinedClub club =
+        ModalRoute.of(context)!.settings.arguments as JoinedClub;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -56,18 +62,25 @@ class _JoinedClubDetailState extends State<JoinedClubDetail> {
                     borderRadius: BorderRadius.circular(150),
                   ),
                   child: ClipOval(
-                    child: Image.asset(
-                      "assets/images/Capi.png",
-                      width: 150,
-                      height: 150,
-                      fit: BoxFit.cover,
-                    ),
+                    child: club.clubLogo != null
+                        ? Image.file(
+                            File(club.clubLogo),
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/Capi.png",
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 SizedBox(height: 10),
                 Center(
                   child: Text(
-                    "Yoga Club",
+                    "${club.clubName}",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -107,9 +120,7 @@ class _JoinedClubDetailState extends State<JoinedClubDetail> {
                       SizedBox(height: 8),
                       Expanded(
                         child: Text(
-                          "Yoga Club is the perfect space for Yoga enthusiasts to gather, learn, and compete. "
-                          "Join us to sharpen your skills, participate in tournaments, and connect with fellow Yoga lovers "
-                          "in a fun and engaging environment.",
+                          "${club.clubDescription}",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white, // Text color

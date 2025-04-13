@@ -64,7 +64,8 @@ class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
               if (value == "Page1") {
                 Navigator.pushNamed(context, '/joinedClubMembers');
               } else if (value == "Page2") {
-                Navigator.pushNamed(context, '/joinedClubDetail');
+                Navigator.pushNamed(context, '/joinedClubDetail',
+                    arguments: club);
               } else if (value == "Page3") {
                 Navigator.pop(context);
               }
