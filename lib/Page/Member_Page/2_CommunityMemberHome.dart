@@ -47,7 +47,7 @@ class _CommunityMemberHomeState extends ConsumerState<CommunityMemberHome> {
                         ),
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
-                          child: Cardcomponent.idiotCommunityCard(
+                          child: Cardcomponent.idiotCommunityCardWithId(
                               comName: community.name,
                               description: community.description,
                               comPhoto: (Uri.tryParse(community.image)
@@ -63,7 +63,7 @@ class _CommunityMemberHomeState extends ConsumerState<CommunityMemberHome> {
                                       : Image.asset(
                                           "assets/images/IdiotLogo.png",
                                           fit: BoxFit.cover),
-                              memberCount: 100),
+                              comId: community.id),
                         ),
                       );
                     },

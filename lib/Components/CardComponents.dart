@@ -394,4 +394,65 @@ class Cardcomponent {
       ),
     );
   }
+
+  static Container idiotCommunityCardWithId(
+      {required comName,
+      required description,
+      required comId,
+      required comPhoto}) {
+    return Container(
+      height: 200,
+      padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+      margin: EdgeInsets.only(bottom: 20, right: 50, left: 50),
+      decoration: Cardcomponent.cardBackDecoration,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              children: [
+                ClipOval(
+                  child: Container(height: 60, width: 60, child: comPhoto),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(comName, style: Cardcomponent.clubTitleStyle),
+                      RichText(
+                        text: TextSpan(
+                          text: "Community Id : ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 10,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "$comId",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 5),
+          Cardcomponent.descriptionBox(
+            text: description,
+            height: 100,
+            width: 275,
+          ), //make changes
+        ],
+      ),
+    );
+  }
 }

@@ -97,18 +97,22 @@ class _CreatorMainScreenState extends ConsumerState<CreatorMainScreen> {
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.home),
               icon: Icon(Icons.home_outlined),
               label: "Home",
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.group_add),
               icon: Icon(Icons.group_add_outlined),
               label: 'Member',
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.people),
               icon: Icon(Icons.people_outline_sharp),
               label: 'Club',
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.person),
               icon: Icon(Icons.person_outlined),
               label: 'Profile',
             ),

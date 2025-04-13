@@ -88,6 +88,7 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
     final response = await http.put(uri);
     final resBody = jsonDecode(response.body);
     print(resBody);
+    setState(() {});
     if (resBody["success"] == true) {
       // final updatedMember = Member.fromJson(resBody["data"]["photo"]);
       final updatedMember1 = member.copyWith(photo: resBody["data"]["photo"]);

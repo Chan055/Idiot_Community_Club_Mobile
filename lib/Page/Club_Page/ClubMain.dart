@@ -90,20 +90,41 @@ class _ClubMainScreenState extends ConsumerState<ClubMainScreen> {
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.home),
               icon: Icon(Icons.home_outlined),
               label: "Clubs",
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.add_circle),
               icon: Icon(Icons.add_circle_outline),
               label: 'My Club',
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.group),
               icon: Icon(Icons.group),
               label: 'Joined Clubs',
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+// ignore: unused_element
+class _ActiveIcon extends StatelessWidget {
+  final IconData icon;
+  const _ActiveIcon({required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: Icon(icon, color: Colors.blue),
     );
   }
 }

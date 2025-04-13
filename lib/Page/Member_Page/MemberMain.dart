@@ -85,14 +85,17 @@ class _MemberMainScreenState extends ConsumerState<MemberMainScreen> {
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.home),
               icon: Icon(Icons.home_outlined),
               label: "Home",
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.people_sharp),
               icon: Icon(Icons.people_outline_sharp),
               label: 'MyCommunity',
             ),
             BottomNavigationBarItem(
+              activeIcon: _ActiveIcon(icon: Icons.person),
               icon: Icon(Icons.person_outlined),
               label: 'Profile',
             ),
