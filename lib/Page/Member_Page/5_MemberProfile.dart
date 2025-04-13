@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -82,7 +83,7 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
     final fakeUploadedUrl = imageFile.path;
 
     final uri = Uri.parse(
-        "http://localhost:8080/api/member/edit-profile-photo?userId=${member.id}&photo=$fakeUploadedUrl");
+        "$BASE_URL/api/member/edit-profile-photo?userId=${member.id}&photo=$fakeUploadedUrl");
 
     final response = await http.put(uri);
     final resBody = jsonDecode(response.body);

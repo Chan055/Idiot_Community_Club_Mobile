@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -36,7 +37,7 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
     final creator = ref.read(creatorProvider);
     if (creator == null) return;
 
-    final uri = Uri.parse("http://localhost:8080/api/creator/create");
+    final uri = Uri.parse("$BASE_URL/api/creator/create");
     final body = {
       "communityName": nameController.text.trim(),
       "description": descriptionController.text.trim(),
