@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../Providers/Creator/creator_provider.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
+import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
+import 'dart:convert';
 
 class CreatorLogin extends ConsumerStatefulWidget {
   const CreatorLogin({super.key});
@@ -20,7 +23,7 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> loginUser() async {
-    final url = Uri.parse("http://localhost:8080/api/creator/login");
+    final url = Uri.parse("$BASE_URL/api/creator/login");
 
     final response = await http.post(
       url,
@@ -35,16 +38,13 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
     print(resBody);
 
     if (resBody["success"] == true) {
-      // final data = resBody["data"];
-      // final creator = Creator.fromJson(data);
-      // print(creator);
-      // ref.read(creatorProvider.notifier).state = creator;
-      //
-      // final creator1 = ref.watch(creatorProvider);
-      // print(creator1?.name);
       print(ref.watch(creatorProvider)?.name);
       ref.read(creatorProvider.notifier).state =
           Creator.fromJson(resBody["data"]);
+      if (resBody["data"]["communityInfo"] != null) {
+        ref.read(communityProvider.notifier).state =
+            Community.fromJson(resBody["data"]["communityInfo"]);
+      }
       print(ref.watch(creatorProvider)?.name);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("✅ ${resBody["message"]}")),

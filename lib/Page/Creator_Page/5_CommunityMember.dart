@@ -55,8 +55,6 @@ class _CommunityMemberrequestState
 class ListTileComponent_2 {
   static Widget getListTile(
       JoinRequest user, BuildContext context, WidgetRef ref) {
-    final community = ref.watch(communityProvider);
-    final creator = ref.watch(creatorProvider);
     OverlayEntry? overlayEntry;
 
     void showOverlay() {
@@ -116,10 +114,21 @@ class ListTileComponent_2 {
                     style: TextStyle(color: Colors.white, fontSize: 11),
                   ),
                   const SizedBox(height: 5),
-                  Cardcomponent.descriptionBox(
-                    text: "No reason provided yet.",
-                    height: 120,
-                    width: 280,
+                  FutureBuilder<String>(
+                    future: fetchJoinReason(user.userId),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      } else {
+                        return Cardcomponent.descriptionBox(
+                          text: snapshot.data ?? "No reason provided.",
+                          height: 120,
+                          width: 280,
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(height: 10),
                   Center(

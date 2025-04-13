@@ -115,14 +115,13 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
                                       color: Colors.white,
                                     ),
                                     child: image != null
-                                        ? Image.file(
-                                            image!,
+                                        ? Image.file(image!,
                                             width: 200,
                                             height: 200,
-                                          )
+                                            fit: BoxFit.cover)
                                         : Image.asset(
                                             "assets/images/UploadImage.png",
-                                          ),
+                                            fit: BoxFit.cover),
                                   ),
                                 ),
                               ),
@@ -197,7 +196,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
                         SizedBox(height: 20),
                         Center(
                           child: InkWell(
-                            onDoubleTap: () {
+                            onTap: () {
                               if (image != null) {
                                 _submitClubForm();
                               } else {
@@ -209,9 +208,16 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
                               }
                             },
                             child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.white),
                               height: 40,
                               width: 100,
-                              child: ButtonComponents.getLogInBorder("Request"),
+                              child: Center(
+                                  child: Text(
+                                "Request",
+                                style: TextStyle(color: Colors.blue),
+                              )),
                             ),
                           ),
                         ),

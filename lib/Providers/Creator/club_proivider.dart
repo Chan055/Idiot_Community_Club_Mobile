@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:idiot_community_club_app/Models/Constant.dart';
 
 Future<void> fetchClubs(WidgetRef ref, int communityId) async {
-  final uri = Uri.parse("http://localhost:8080/api/creator/view-clubs?communityId=$communityId");
+  final uri =
+      Uri.parse("$BASE_URL/api/creator/view-clubs?communityId=$communityId");
   final response = await http.get(uri);
   final data = jsonDecode(response.body);
 
   if (data['success'] == true) {
-    final List<Club> clubs = (data['data'] as List)
-        .map((club) => Club.fromJson(club))
-        .toList();
+    final List<Club> clubs =
+        (data['data'] as List).map((club) => Club.fromJson(club)).toList();
     ref.read(clubListProvider.notifier).state = clubs;
   }
 }

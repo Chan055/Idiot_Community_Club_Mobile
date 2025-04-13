@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/TextComponents.dart';
+import 'package:idiot_community_club_app/Providers/Creator/new_club_requests_provider.dart';
 
 class Cardcomponent {
   static BoxDecoration cardBackDecoration = BoxDecoration(
@@ -34,6 +35,85 @@ class Cardcomponent {
       margin: EdgeInsets.only(bottom: 20),
       decoration: Cardcomponent.cardBackDecoration,
       child: child,
+    );
+  }
+
+  static Container idiotClubRequestCart1({
+    required BuildContext context,
+    required NewClubRequest club,
+  }) {
+    return Container(
+      height: 230,
+      width: 345,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(bottom: 20),
+      decoration: cardBackDecoration,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              ClipOval(
+                child: club.logo.startsWith("http")
+                    ? Image.network(club.logo,
+                        width: 50, height: 50, fit: BoxFit.cover)
+                    : Image.file(File(club.logo),
+                        width: 50, height: 50, fit: BoxFit.cover),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(club.clubName, style: clubTitleStyle),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text("Leader: ${club.clubLeaderName}",
+                style: const TextStyle(color: Colors.white, fontSize: 12)),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          descriptionBox(
+            text: club.description,
+            height: 86,
+            width: 300,
+          ),
+          Container(
+            padding:
+                const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
+            width: 300,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "11:11",
+                  style: const TextStyle(
+                    color: Color(0xFF5E5C5C),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "/clubCreateReview",
+                    arguments: club, // optionally pass full object
+                  ),
+                  child: const Text(
+                    "See Details ->",
+                    style: TextStyle(
+                      color: Color(0xFF5E5C5C),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

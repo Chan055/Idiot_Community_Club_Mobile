@@ -133,10 +133,17 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
                       );
                     }
                   },
-                  child: SizedBox(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.green),
                     height: 40,
                     width: 100,
-                    child: Text("Create"),
+                    child: Center(
+                        child: Text(
+                      "Create",
+                      style: TextStyle(color: Colors.white),
+                    )),
                   ),
                 ),
               ],

@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import '../../Providers/Creator/creator_provider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/club_proivider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/join_request_provider.dart';
 
 class CreatorProfile extends ConsumerStatefulWidget {
   const CreatorProfile({super.key});
@@ -191,7 +194,17 @@ class _CreatorProfileState extends ConsumerState<CreatorProfile> {
                   Icons.email_outlined, "Email: ${creator?.email ?? '-'}"),
               _getMyLine(),
               InkWell(
-                onTap: () => Navigator.pushNamed(context, "/"),
+                onTap: () {
+                  // Reset all providers
+                  ref.invalidate(creatorProvider);
+                  ref.invalidate(communityProvider);
+                  ref.invalidate(clubListProvider);
+                  ref.invalidate(joinRequestProvider);
+
+                  // Navigate to login or home screen
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/", (route) => false);
+                },
                 child: _getMyProfile(Icons.logout, "Logout"),
               ),
               _getMyLine(),

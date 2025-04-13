@@ -1,19 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
 import 'package:idiot_community_club_app/Components/TextComponents.dart';
+import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/creator_provider.dart';
+import 'package:idiot_community_club_app/Providers/Creator/new_club_requests_provider.dart';
 
-class ClubCreateReview extends StatefulWidget {
+class ClubCreateReview extends ConsumerWidget {
   const ClubCreateReview({super.key});
 
   @override
-  State<ClubCreateReview> createState() => _ClubCreateReviewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final newClub =
+        ModalRoute.of(context)!.settings.arguments as NewClubRequest;
+    final creator = ref.watch(creatorProvider);
+    final community = ref.watch(communityProvider);
 
-class _ClubCreateReviewState extends State<ClubCreateReview> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
@@ -49,24 +55,19 @@ class _ClubCreateReviewState extends State<ClubCreateReview> {
                     children: [
                       Textcomponents.whiteText(
                         fontSize: 18,
-                        text: "Chess Class",
+                        text: newClub.clubName,
                         fontweight: FontWeight.bold,
                       ),
-                      // Text(
-                      //   "Chess Class",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 18,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
                       SizedBox(height: 5),
                       ClipOval(
                         child: Container(
                           height: 100,
                           width: 100,
                           decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Image.asset("assets/images/RedPanda.jpeg"),
+                          child: newClub.logo.startsWith("http")
+                              ? Image.network(newClub.logo, fit: BoxFit.cover)
+                              : Image.file(File(newClub.logo),
+                                  fit: BoxFit.cover),
                         ),
                       ),
                     ],
@@ -78,7 +79,7 @@ class _ClubCreateReviewState extends State<ClubCreateReview> {
                   fontweight: FontWeight.bold,
                 ),
                 Cardcomponent.descriptionBox(
-                  text: "Aike Paung Bra",
+                  text: newClub.clubLeaderName,
                   height: 35,
                   width: 320,
                   fontSize: 16,
@@ -89,8 +90,7 @@ class _ClubCreateReviewState extends State<ClubCreateReview> {
                   fontweight: FontWeight.bold,
                 ),
                 Cardcomponent.descriptionBox(
-                  text:
-                      "AikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAike Paung Bra",
+                  text: newClub.description,
                   height: 140,
                   width: 320,
                   fontSize: 16,
@@ -101,16 +101,10 @@ class _ClubCreateReviewState extends State<ClubCreateReview> {
                   fontweight: FontWeight.bold,
                 ),
                 Cardcomponent.descriptionBox(
-                  text:
-                      "AikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAikeAike Paung Bra",
+                  text: newClub.reason,
                   height: 140,
                   width: 320,
                   fontSize: 16,
-                ),
-                Textcomponents.whiteText(
-                  text: "11:30",
-                  fontSize: 14,
-                  fontweight: FontWeight.normal,
                 ),
               ],
             ),
@@ -120,33 +114,63 @@ class _ClubCreateReviewState extends State<ClubCreateReview> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  width: 120,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    gradient: ButtonComponents.acceptButton(),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Textcomponents.whiteText(
-                      text: "Accept",
-                      fontSize: 16,
-                      fontweight: FontWeight.normal,
+                GestureDetector(
+                  onTap: () async {
+                    if (creator != null && community != null) {
+                      await sendClubDecision(
+                        creatorId: creator.id,
+                        communityId: community.communityId,
+                        createClubRequestId: newClub.requestId,
+                        status: RequestStatus.APPROVED,
+                        context: context,
+                      );
+                      fetchNewClubRequests(ref, community.communityId);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Container(
+                    width: 120,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      gradient: ButtonComponents.acceptButton(),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Textcomponents.whiteText(
+                        text: "Accept",
+                        fontSize: 16,
+                        fontweight: FontWeight.normal,
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  width: 120,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    gradient: ButtonComponents.rejectButton(),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Textcomponents.whiteText(
-                      text: "Reject",
-                      fontSize: 16,
-                      fontweight: FontWeight.normal,
+                GestureDetector(
+                  onTap: () async {
+                    if (creator != null && community != null) {
+                      await sendClubDecision(
+                        creatorId: creator.id,
+                        communityId: community.communityId,
+                        createClubRequestId: newClub.requestId,
+                        status: RequestStatus.REJECTED,
+                        context: context,
+                      );
+                      fetchNewClubRequests(ref, community.communityId);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Container(
+                    width: 120,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      gradient: ButtonComponents.rejectButton(),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Textcomponents.whiteText(
+                        text: "Reject",
+                        fontSize: 16,
+                        fontweight: FontWeight.normal,
+                      ),
                     ),
                   ),
                 ),
