@@ -62,7 +62,8 @@ class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             onSelected: (value) {
               if (value == "Page1") {
-                Navigator.pushNamed(context, '/joinedClubMembers');
+                Navigator.pushNamed(context, '/joinedClubMembers',
+                    arguments: club);
               } else if (value == "Page2") {
                 Navigator.pushNamed(context, '/joinedClubDetail',
                     arguments: club);
