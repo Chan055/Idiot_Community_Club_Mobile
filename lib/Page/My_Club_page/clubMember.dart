@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:idiot_community_club_app/Components/ListTileRequst.dart';
-import 'package:idiot_community_club_app/Helper/Api.dart';
-import 'package:idiot_community_club_app/Models/RandomUser.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
+import 'package:idiot_community_club_app/Providers/Club/ClubMembersProvider.dart';
+import 'package:idiot_community_club_app/Providers/Club/my_created_club_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 
-class MyClubMember extends StatefulWidget {
+class MyClubMember extends ConsumerStatefulWidget {
   const MyClubMember({super.key});
 
   @override
-  State<MyClubMember> createState() => _MyClubMemberState();
+  ConsumerState<MyClubMember> createState() => _MyClubMemberState();
 }
 
-class _MyClubMemberState extends State<MyClubMember> {
-  List<RandomUser> userList = [];
+class _MyClubMemberState extends ConsumerState<MyClubMember> {
 
-  loadUser() async {
-    List<RandomUser> listUser = await Api.getAllUser();
-    setState(() {
-      this.userList = listUser;
-    });
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadUser();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+      final club = ref.watch(myCreatedClubStateProvider);
+      final leader= ref.watch(memberProvider);
+      if (club != null && leader!=null) {
+        fetchClubMembers(ref, leader.id, club.clubId);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final members=ref.watch(clubMembersProvider);
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -59,12 +61,12 @@ class _MyClubMemberState extends State<MyClubMember> {
         ),
       ),
       body:
-          userList.length > 0
+          members.length > 0
               ? ListView.builder(
-                itemCount: userList.length,
+                itemCount: members.length,
                 itemBuilder:
                     (context, index) =>
-                        ListTileComponent.getListTile_1(userList[index]),
+                        getListTile(members[index]),
               )
               : Center(
                 child: CircularProgressIndicator(
@@ -74,3 +76,23 @@ class _MyClubMemberState extends State<MyClubMember> {
     );
   }
 }
+
+
+  Widget getListTile(ClubMember user) {
+
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundImage:
+              getUserImage(user.profileImage), // Local image fallback
+          onBackgroundImageError:
+              (_, __) => const Icon(Icons.person, size: 30, color: Colors.grey),
+        ),
+        title: Text(
+          "${user.userName}",
+        ),
+        trailing: Icon(Icons.more_vert, size: 25, color: Colors.black45),
+      ),
+    );
+  }
