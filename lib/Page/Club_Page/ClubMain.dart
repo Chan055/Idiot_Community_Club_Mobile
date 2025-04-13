@@ -6,6 +6,8 @@ import 'package:idiot_community_club_app/Page/Club_Page/2_MyClubForm.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/3_MyCreatedClub.dart';
 import 'package:idiot_community_club_app/Page/Club_Page/4_JoiedClubs.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';
 
 class ClubMainScreen extends ConsumerStatefulWidget {
   const ClubMainScreen({super.key});
@@ -17,10 +19,14 @@ class ClubMainScreen extends ConsumerStatefulWidget {
 class _ClubMainScreenState extends ConsumerState<ClubMainScreen> {
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
+  Future<void> _onItemTapped(int index) async {
     setState(() {
       _selectedIndex = index;
     });
+    final member = ref.read(memberProvider);
+    if (member != null) {
+      await fetchMyCommunity(ref, member.id);
+    }
   }
 
   @override
@@ -37,7 +43,7 @@ class _ClubMainScreenState extends ConsumerState<ClubMainScreen> {
 
     final List<Widget> _screens = [
       const ClubHome(),
-      isLeader ==true? const MyCreatedClub() : const MyClubForm(),
+      isLeader ? const MyCreatedClub() : const MyClubForm(),
       const JoinedClub(),
     ];
 

@@ -70,12 +70,11 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                 Navigator.pop(context);
               }
             },
-            itemBuilder:
-                (BuildContext context) => [
-                  PopupMenuItem(value: "Page1", child: Text("Club Member")),
-                  PopupMenuItem(value: "Page2", child: Text("Club Detail")),
-                  PopupMenuItem(value: "Page3", child: Text("Leave Club")),
-                ],
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(value: "Page1", child: Text("Club Member")),
+              PopupMenuItem(value: "Page2", child: Text("Club Detail")),
+              PopupMenuItem(value: "Page3", child: Text("Leave Club")),
+            ],
           ),
         ],
         flexibleSpace: Container(

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
+import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
@@ -68,8 +69,6 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Success ${resBody["message"]}")),
       );
-      final updatedCreator = currentCommunity.copyWith(isLeader: true);
-      ref.read(currentCommunityProvider.notifier).state = updatedCreator;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed: ${resBody["message"]}")),
