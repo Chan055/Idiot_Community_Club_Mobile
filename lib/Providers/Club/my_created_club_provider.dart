@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Models/Constant.dart';
-import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
-import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
-import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 
 class MyCreatedClubModel {
   final String clubLogo;

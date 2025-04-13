@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
-import 'package:idiot_community_club_app/Providers/Club/my_created_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/joined_club_member_provider.dart';
 
 class JoinedClubMembers extends ConsumerStatefulWidget {

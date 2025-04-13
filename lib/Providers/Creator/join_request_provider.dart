@@ -4,8 +4,6 @@ import 'dart:convert';
 
 // Add this to your project (maybe under services/ or utils/ directory)
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:idiot_community_club_app/Models/Constant.dart';
 

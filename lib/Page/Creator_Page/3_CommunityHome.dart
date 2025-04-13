@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:idiot_community_club_app/Providers/Creator/CommunityMembersProvider.dart';
+
 import 'package:idiot_community_club_app/Providers/Creator/club_proivider.dart';
 import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
-import 'package:idiot_community_club_app/Providers/Creator/creator_provider.dart';
-import '../../Components/BarComponents.dart';
+
 import '../../Components/ButtonComponents.dart';
 import '../../Components/CardComponents.dart';
 
@@ -22,7 +21,7 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
   void initState() {
     super.initState();
     final community = ref.read(communityProvider);
-    if (community != null ) {
+    if (community != null) {
       fetchClubs(ref, community.communityId);
     }
   }
@@ -79,7 +78,9 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
                             children: [
                               ButtonComponents.getMyGradientText(
                                   "Community Members", 12.0),
-                                  SizedBox(width: 2,),
+                              SizedBox(
+                                width: 2,
+                              ),
                               ButtonComponents.getMyGradientText(
                                   "${community.memberCount}", 12.0),
                             ],

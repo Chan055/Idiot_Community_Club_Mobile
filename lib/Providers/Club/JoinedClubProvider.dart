@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:idiot_community_club_app/Models/Constant.dart';
 
-Future<void> fetchJoinedClubs(WidgetRef ref, int userId, int communityId) async {
+Future<void> fetchJoinedClubs(
+    WidgetRef ref, int userId, int communityId) async {
   final uri = Uri.parse(
-    "http://localhost:8080/api/member/view-joined-clubs?userId=$userId&communityId=$communityId",
+    "$BASE_URL/member/view-joined-clubs?userId=$userId&communityId=$communityId",
   );
   final response = await http.get(uri);
   final data = jsonDecode(response.body);
@@ -18,8 +20,6 @@ Future<void> fetchJoinedClubs(WidgetRef ref, int userId, int communityId) async 
     ref.read(joinedClubsProvider.notifier).state = [];
   }
 }
-
-
 
 final joinedClubsProvider = StateProvider<List<JoinedClub>>((ref) => []);
 

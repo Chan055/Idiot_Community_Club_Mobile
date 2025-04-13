@@ -119,6 +119,7 @@ class _CreatorMainScreenState extends ConsumerState<CreatorMainScreen> {
   }
 }
 
+// ignore: unused_element
 class _ActiveIcon extends StatelessWidget {
   final IconData icon;
   const _ActiveIcon({required this.icon});

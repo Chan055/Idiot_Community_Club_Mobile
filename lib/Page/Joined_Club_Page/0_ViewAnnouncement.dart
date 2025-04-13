@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
-import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
-import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/read_post_provider.dart';
 
 class ViewAnnouncement extends ConsumerStatefulWidget {

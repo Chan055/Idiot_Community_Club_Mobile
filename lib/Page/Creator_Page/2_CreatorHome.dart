@@ -6,8 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import '../../Components/BarComponents.dart';
-import '../../Components/ButtonComponents.dart';
 import '../../Components/CardComponents.dart';
 
 import '../../Providers/Creator/creator_provider.dart';
@@ -71,7 +69,6 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
     return Center(
       child: Column(
         children: [

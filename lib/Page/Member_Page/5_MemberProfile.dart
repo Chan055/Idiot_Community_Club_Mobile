@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
-import 'package:idiot_community_club_app/Components/BarComponents.dart';
 import '../../Providers/Member/member_provider.dart';
 
 class MemberProfile extends ConsumerStatefulWidget {

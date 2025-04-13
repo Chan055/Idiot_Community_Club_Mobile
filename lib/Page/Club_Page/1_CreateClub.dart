@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:idiot_community_club_app/Components/BarComponents.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
 

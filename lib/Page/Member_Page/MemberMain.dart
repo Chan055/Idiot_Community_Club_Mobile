@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:idiot_community_club_app/Page/Creator_Page/5_CommunityMember.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/2_CommunityMemberHome.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/4_MyCommunity.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/5_MemberProfile.dart';
