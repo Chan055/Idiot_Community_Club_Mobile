@@ -136,13 +136,13 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.green),
+                        color: Colors.white),
                     height: 40,
                     width: 100,
                     child: Center(
                         child: Text(
                       "Create",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.blue),
                     )),
                   ),
                 ),

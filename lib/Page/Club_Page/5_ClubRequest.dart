@@ -36,7 +36,7 @@ class _ClubRequestState extends ConsumerState<ClubRequest> {
       "clubId": clubId,
       "communityId": communityId,
       "userId": userId,
-      "reasonToJoin": reasonController.text,
+      "reasonToJoinThisClub": reasonController.text,
     };
 
     try {
