@@ -2,7 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
+import 'package:idiot_community_club_app/Providers/Club/ClubJoinRequestListProvider.dart';
+import 'package:idiot_community_club_app/Providers/Club/ClubMembersProvider.dart';
+import 'package:idiot_community_club_app/Providers/Club/club_announcement_provider.dart';
+import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/my_community_list_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/read_post_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -123,6 +129,23 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
     final member = ref.watch(memberProvider);
     final Size screen = MediaQuery.of(context).size;
     final String? photoPath = _image?.path ?? member?.photo;
+    void logout(WidgetRef ref, BuildContext context) {
+      // Clear all related states
+      ref.invalidate(memberProvider); // Clear logged-in member
+      ref.invalidate(myCommunityListProvider); // Clear joined communities
+      ref.invalidate(currentCommunityProvider); // Optional: if you use it
+      ref.invalidate(currentClubProvider); // Optional: if you use it
+      ref.invalidate(clubAnnouncementProvider); // Optional: if you use it
+      ref.invalidate(clubJoinRequestsProvider);
+      ref.invalidate(clubPostsProvider);
+      ref.invalidate(clubMembersProvider);
+      // Optional: if you use it
+
+      // You can also clear any storage or auth token if needed here.
+
+      // Navigate back to login or welcome page
+      Navigator.pushReplacementNamed(context, '/');
+    }
 
     return Scaffold(
       body: Column(

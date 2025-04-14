@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
+import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/joined_club_member_provider.dart';
 
 class JoinedClubMembers extends ConsumerStatefulWidget {
@@ -17,8 +18,7 @@ class _JoinedClubMembersState extends ConsumerState<JoinedClubMembers> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final JoinedClub club =
-          ModalRoute.of(context)!.settings.arguments as JoinedClub;
+      final Club club = ModalRoute.of(context)!.settings.arguments as Club;
       if (club != null) {
         fetchJoinedClubMembers(ref, club.clubId);
       }

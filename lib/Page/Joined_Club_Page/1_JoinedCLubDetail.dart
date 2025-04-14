@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
+import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
 
 class JoinedClubDetail extends StatefulWidget {
   const JoinedClubDetail({super.key});
@@ -13,8 +14,7 @@ class JoinedClubDetail extends StatefulWidget {
 class _JoinedClubDetailState extends State<JoinedClubDetail> {
   @override
   Widget build(BuildContext context) {
-    final JoinedClub club =
-        ModalRoute.of(context)!.settings.arguments as JoinedClub;
+    final Club club = ModalRoute.of(context)!.settings.arguments as Club;
 
     return Scaffold(
       extendBodyBehindAppBar: true,

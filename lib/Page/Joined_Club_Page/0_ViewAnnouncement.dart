@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
+import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/read_post_provider.dart';
 
@@ -16,8 +17,7 @@ class ViewAnnouncement extends ConsumerStatefulWidget {
 class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
   @override
   Widget build(BuildContext context) {
-    final JoinedClub club =
-        ModalRoute.of(context)!.settings.arguments as JoinedClub;
+    final Club club = ModalRoute.of(context)!.settings.arguments as Club;
     final community = ref.watch(currentCommunityProvider);
     final clubName = club.clubName;
     final announcementsAsync =
