@@ -25,13 +25,12 @@ Future<String> fetchJoinReason(int userId) async {
   }
 }
 
-Future<void> sendJoinRequestDecision({
+Future<String> sendJoinRequestDecision({
   required RequestStatus status,
   required int joinCommunityRequestId,
   required int userId,
   required int communityCreatorId,
   required int communityId,
-  required BuildContext context,
 }) async {
   final uri = Uri.parse("$BASE_URL/api/creator/decidejoincomreqeust");
   final body = jsonEncode({
@@ -49,9 +48,7 @@ Future<void> sendJoinRequestDecision({
   );
 
   final data = jsonDecode(response.body);
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text(data["message"] ?? "Unknown response")),
-  );
+  return data["message"] ?? "Unknown response";
 }
 
 Future<void> fetchJoinRequests(WidgetRef ref, int communityId) async {

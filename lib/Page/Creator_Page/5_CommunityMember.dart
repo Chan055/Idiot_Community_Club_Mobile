@@ -194,7 +194,6 @@ class ListTileComponent_2 {
                                   userId: user.userId,
                                   communityCreatorId: creator.id,
                                   communityId: community.communityId,
-                                  context: context,
                                 );
                                 fetchJoinRequests(ref, community.communityId);
                               }
@@ -244,7 +243,6 @@ class ListTileComponent_2 {
                                   userId: user.userId,
                                   communityCreatorId: creator.id,
                                   communityId: community.communityId,
-                                  context: context,
                                 );
                                 fetchJoinRequests(ref, community.communityId);
                               }
