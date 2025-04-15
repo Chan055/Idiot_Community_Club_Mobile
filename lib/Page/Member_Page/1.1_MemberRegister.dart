@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
-import 'package:http/http.dart' as http;
-import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/1_MemberLogin.dart';
 
 class MemberRegister extends StatefulWidget {
@@ -15,10 +14,12 @@ class MemberRegister extends StatefulWidget {
 
 class _MemberRegisterState extends State<MemberRegister> {
   bool showPassword = false;
-  var userNameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var rePasswordController = TextEditingController();
+  bool agreeToTerms = false;
+
+  final userNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final rePasswordController = TextEditingController();
 
   @override
   void dispose() {
@@ -30,9 +31,16 @@ class _MemberRegisterState extends State<MemberRegister> {
   }
 
   Future<void> registerUser() async {
+    if (!agreeToTerms) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("❌ Please agree to the terms.")),
+      );
+      return;
+    }
+
     if (passwordController.text != rePasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Passwords do not match")),
+        const SnackBar(content: Text("❌ Passwords do not match")),
       );
       return;
     }
@@ -67,107 +75,153 @@ class _MemberRegisterState extends State<MemberRegister> {
   Widget build(BuildContext context) {
     return ScreenDeco.getWholeGradientScreen(
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 50),
-                  Image.asset("assets/images/WhiteLogo.png"),
-                  SizedBox(height: 10),
-                  ButtonComponents.getLogoText(
-                    "IDIOT COMMUNITY CLUB",
-                    fontSize: 24,
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 50),
+                Image.asset("assets/images/WhiteLogo.png"),
+                const SizedBox(height: 10),
+                ButtonComponents.getLogoText(
+                  "IDIOT COMMUNITY CLUB",
+                  fontSize: 24,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 40),
+                Container(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(30)),
                   ),
-                  SizedBox(height: 40),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(30)),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-                    child: Form(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ButtonComponents.getMyGradientText("Sign Up", 25),
-                          ButtonComponents.getMyGradientText(
-                              "Sign up now to join amazing clubs!", 12),
-                          SizedBox(height: 20),
-                          ButtonComponents.getMyGradientText("Username", 18),
-                          ScreenDeco.inputBox(
-                            myController: userNameController,
-                            getInput: (_) {},
-                            myLabel: "Enter Your Username",
-                          ),
-                          ButtonComponents.getMyGradientText("Email", 18),
-                          ScreenDeco.inputBox(
-                            myController: emailController,
-                            getInput: (_) {},
-                            myLabel: "Enter Your Email",
-                          ),
-                          ButtonComponents.getMyGradientText("Password", 18),
-                          ScreenDeco.inputBox(
-                            getInput: (_) {},
-                            myLabel: "Enter Your Password",
-                            myObsecure: !showPassword,
-                            password: true,
-                            togglePassword: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                            myController: passwordController,
-                          ),
-                          ButtonComponents.getMyGradientText(
-                              "Re-Enter Password", 18),
-                          ScreenDeco.inputBox(
-                            getInput: (_) {},
-                            myLabel: "Confirm Your Password",
-                            myObsecure: !showPassword,
-                            password: true,
-                            togglePassword: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                            myController: rePasswordController,
-                          ),
-                          SizedBox(height: 20),
-                          InkWell(
-                            onTap: registerUser,
-                            child: ScreenDeco.getGradientBox(
-                              text: "Sign Up",
-                              size: 20,
-                              myRadius: 12,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ButtonComponents.getMyGradientText("Sign Up", 25),
+                        ButtonComponents.getMyGradientText(
+                            "Sign up now to join amazing clubs!", 12),
+                        const SizedBox(height: 20),
+                        ButtonComponents.getMyGradientText("Username", 18),
+                        ScreenDeco.inputBox(
+                          myController: userNameController,
+                          getInput: (_) {},
+                          myLabel: "Enter Your Username",
+                        ),
+                        ButtonComponents.getMyGradientText("Email", 18),
+                        ScreenDeco.inputBox(
+                          myController: emailController,
+                          getInput: (_) {},
+                          myLabel: "Enter Your Email",
+                        ),
+                        ButtonComponents.getMyGradientText("Password", 18),
+                        ScreenDeco.inputBox(
+                          getInput: (_) {},
+                          myLabel: "Enter Your Password",
+                          myObsecure: !showPassword,
+                          password: true,
+                          togglePassword: () =>
+                              setState(() => showPassword = !showPassword),
+                          myController: passwordController,
+                        ),
+                        ButtonComponents.getMyGradientText(
+                            "Re-Enter Password", 18),
+                        ScreenDeco.inputBox(
+                          getInput: (_) {},
+                          myLabel: "Confirm Your Password",
+                          myObsecure: !showPassword,
+                          password: true,
+                          togglePassword: () =>
+                              setState(() => showPassword = !showPassword),
+                          myController: rePasswordController,
+                        ),
+                        const SizedBox(height: 20),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: agreeToTerms,
+                                  onChanged: (value) =>
+                                      setState(() => agreeToTerms = value!),
+                                ),
+                                const Expanded(
+                                  child: Text(
+                                    "By registering, you agree to our",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                              ],
                             ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, "/termsOfUse");
+                                  },
+                                  child: _linkText("Terms of Use"),
+                                ),
+                                const Text(" and ",
+                                    style: TextStyle(fontSize: 12)),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, "/privacyAndPolicy");
+                                  },
+                                  child: _linkText("Privacy Policy"),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        InkWell(
+                          onTap: registerUser,
+                          child: ScreenDeco.getGradientBox(
+                            text: "Sign Up",
+                            size: 20,
+                            myRadius: 12,
                           ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Already have an account?",
-                                  style: TextStyle(fontSize: 12)),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, "/memberLogin");
-                                },
-                                child: ButtonComponents.getMyGradientText(
-                                    "Log in", 12),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Already have an account?",
+                                style: TextStyle(fontSize: 12)),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, "/memberLogin");
+                              },
+                              child: ButtonComponents.getMyGradientText(
+                                  "Log in", 12),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _linkText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 12,
+        color: Color(0xFF52C8FF),
+        fontWeight: FontWeight.bold,
+        decoration: TextDecoration.none,
+      ),
     );
   }
 }

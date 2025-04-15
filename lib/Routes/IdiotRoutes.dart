@@ -18,7 +18,9 @@ import 'package:idiot_community_club_app/Page/Joined_Club_Page/0_ViewAnnouncemen
 import 'package:idiot_community_club_app/Page/Joined_Club_Page/1_JoinedCLubDetail.dart';
 import 'package:idiot_community_club_app/Page/Joined_Club_Page/2_JoinedClubMembers.dart';
 import 'package:idiot_community_club_app/Page/Main_Page/LuanchPage.dart';
+import 'package:idiot_community_club_app/Page/Main_Page/PrivacyAndPolicy.dart';
 import 'package:idiot_community_club_app/Page/Main_Page/StartPage.dart';
+import 'package:idiot_community_club_app/Page/Main_Page/TermsOfUse.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/0_MemberStartPage.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/1.1_MemberRegister.dart';
 import 'package:idiot_community_club_app/Page/Member_Page/1_MemberLogin.dart';
@@ -35,6 +37,8 @@ class IdiotRoutes {
   static var routes = {
     "/": (context) => LuanchPage(),
     "/startPage": (context) => StartPage(),
+    "/termsOfUse": (context) => TermsOfUse(),
+    "/privacyAndPolicy": (context) => PrivacyPolicy(),
 
     //Creator Routes
     "/creatorStartPage": (context) => CreatorStartPage(),
