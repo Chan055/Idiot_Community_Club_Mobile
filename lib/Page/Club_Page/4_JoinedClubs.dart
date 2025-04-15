@@ -25,10 +25,8 @@ class _JoinedClubState extends ConsumerState<JoinedClub> {
       if (member != null && community != null) {
         await fetchJoinedClubs(ref, member.id, community.communityId);
       }
-      setState(() {
-        isLoading = false;
-      });
     });
+    setState(() => isLoading = false);
   }
 
   @override
@@ -53,10 +51,12 @@ class _JoinedClubState extends ConsumerState<JoinedClub> {
           ),
           isLoading
               ? const Expanded(
-                  child: Center(child: CircularProgressIndicator()))
+                  child: Center(child: CircularProgressIndicator()),
+                )
               : joinedClubs.isEmpty
                   ? const Expanded(
-                      child: Center(child: Text("No clubs joined.")))
+                      child: Center(child: Text("No clubs joined.")),
+                    )
                   : Expanded(
                       child: ListView.builder(
                         itemCount: joinedClubs.length,
@@ -64,8 +64,10 @@ class _JoinedClubState extends ConsumerState<JoinedClub> {
                           final club = joinedClubs[index];
                           return InkWell(
                             onTap: () => Navigator.pushNamed(
-                                context, "/viewAnnouncement",
-                                arguments: club),
+                              context,
+                              "/viewAnnouncement",
+                              arguments: club,
+                            ),
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 45.0),

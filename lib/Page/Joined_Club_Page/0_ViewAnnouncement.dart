@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
 import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
+import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/read_post_provider.dart';
 
 class ViewAnnouncement extends ConsumerStatefulWidget {
@@ -15,6 +19,37 @@ class ViewAnnouncement extends ConsumerStatefulWidget {
 }
 
 class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
+  Future<void> leaveClub(
+      WidgetRef ref, int userId, int clubId, int communityId) async {
+    final uri = Uri.parse("$BASE_URL/api/member/club/leave-club");
+
+    final response = await http.post(
+      uri,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "userId": userId,
+        "clubId": clubId,
+        "communityId": communityId,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (data['success'] == true) {
+      // ✅ Remove the left club from provider list
+      // final currentClubs = ref.read(joinedClubsProvider);
+      // final updatedClubs =
+      //     currentClubs.where((club) => club.clubId != clubId).toList();
+      // ref.read(joinedClubsProvider.notifier).state = updatedClubs;
+      fetchJoinedClubs(ref, userId, communityId);
+
+      // Optionally show success
+      print("✅ Club left successfully.");
+    } else {
+      throw Exception(data['message'] ?? "Failed to leave club");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Club club = ModalRoute.of(context)!.settings.arguments as Club;
@@ -58,7 +93,7 @@ class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
             color: Colors.white54,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == "Page1") {
                 Navigator.pushNamed(context, '/joinedClubMembers',
                     arguments: club);
@@ -66,7 +101,39 @@ class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
                 Navigator.pushNamed(context, '/joinedClubDetail',
                     arguments: club);
               } else if (value == "Page3") {
-                Navigator.pop(context);
+                final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Leave Club"),
+                    content:
+                        const Text("Are you sure you want to leave this club?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text("Cancel"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text("Leave"),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirm == true) {
+                  final user = ref.read(memberProvider);
+                  final community = ref.read(currentCommunityProvider);
+                  final clubId =
+                      club.clubId; // ✅ Make sure club is passed as an argument
+
+                  if (user != null && community != null) {
+                    await leaveClub(
+                        ref, user.id, clubId, community.communityId);
+
+                    // Optional: Navigate back after leaving
+                    Navigator.pop(context);
+                  }
+                }
               }
             },
             itemBuilder: (context) => const [
