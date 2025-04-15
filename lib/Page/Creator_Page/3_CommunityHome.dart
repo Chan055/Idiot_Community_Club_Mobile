@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -124,10 +126,9 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
   Widget _buildCommunityImage(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
       return Image.asset("assets/images/UploadImage.png", fit: BoxFit.cover);
-    } else if (imagePath.startsWith("http")) {
-      return Image.network(imagePath, fit: BoxFit.cover);
     } else {
-      return Image.file(File(imagePath), fit: BoxFit.cover);
+      Uint8List imageBytes = base64Decode(imagePath);
+      return Image.memory(imageBytes, fit: BoxFit.cover);
     }
   }
 }

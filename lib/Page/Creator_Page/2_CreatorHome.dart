@@ -30,6 +30,8 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
         await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() => image = File(pickedFile.path));
+
+      
     }
   }
 
@@ -41,7 +43,7 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
     final body = {
       "communityName": nameController.text.trim(),
       "description": descriptionController.text.trim(),
-      "image": image.path,
+      "image": imageToBase64(image),
       "communityCreatorId": creator.id,
     };
 

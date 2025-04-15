@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 
@@ -14,4 +16,11 @@ ImageProvider getUserImage(String? photoPath) {
   } else {
     return const AssetImage("assets/images/IdiotLogo.png");
   }
+}
+
+// This function returns a base64-encoded string from an image file
+Future<String> imageToBase64(File imageFile) async {
+  List<int> imageBytes = await imageFile.readAsBytes();
+  String base64String = base64Encode(imageBytes);
+  return base64String;
 }
