@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-const String BASE_URL = "http://localhost:8080";
+const String BASE_URL = "http://13.211.126.56";
 
 ImageProvider getUserImage(String? photoPath) {
   if (photoPath == null || photoPath.isEmpty) {
