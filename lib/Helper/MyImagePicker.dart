@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -45,5 +47,35 @@ class _MyImagePickerState extends State<MyImagePicker> {
         ),
       ),
     );
+  }
+}
+
+Widget buildCommunityImage(String? imagePath) {
+  if (imagePath == null || imagePath.isEmpty) {
+    return Image.asset("assets/images/UploadImage.png", fit: BoxFit.cover);
+  } else {
+    Uint8List imageBytes = base64Decode(imagePath);
+    return Image.memory(imageBytes, fit: BoxFit.cover);
+  }
+}
+
+Widget buildClubImage(String? imagePath) {
+  if (imagePath != null && isBase64(imagePath)) {
+    Uint8List imageBytes = base64Decode(imagePath);
+    return Image.memory(imageBytes, fit: BoxFit.cover);
+  } else {
+    return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+  }
+}
+
+bool isBase64(String str) {
+  final base64Regex = RegExp(r'^[A-Za-z0-9+/=]+\Z');
+  if (!base64Regex.hasMatch(str)) return false;
+
+  try {
+    base64Decode(str);
+    return true;
+  } catch (_) {
+    return false;
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Member/member_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -91,21 +92,11 @@ class _CommunityMemberRequestState
                   children: [
                     ClipOval(
                       child: Container(
-                        height: 150,
-                        width: 150,
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
-                        child: (Uri.tryParse(community.image)
-                                        ?.hasAbsolutePath ==
-                                    true &&
-                                (community.image.startsWith("http") ||
-                                    community.image.startsWith("https")))
-                            ? Image.network(community.image, fit: BoxFit.cover)
-                            : (community.image.startsWith("/"))
-                                ? Image.file(File(community.image),
-                                    fit: BoxFit.cover)
-                                : Image.asset("assets/images/IdiotLogo.png",
-                                    fit: BoxFit.cover),
-                      ),
+                          height: 150,
+                          width: 150,
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
+                          child: buildClubImage(community.image)),
                     ),
                     Text(
                       community.name,

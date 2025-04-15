@@ -44,21 +44,21 @@ class _MyCommunityState extends ConsumerState<MyCommunity> {
                 : SingleChildScrollView(
                     child: Column(
                       children: communityList.map((community) {
-                        Widget comPhotoWidget;
-                        if (Uri.tryParse(community.image)?.hasAbsolutePath ==
-                                true &&
-                            (community.image.startsWith("http") ||
-                                community.image.startsWith("https"))) {
-                          comPhotoWidget =
-                              Image.network(community.image, fit: BoxFit.cover);
-                        } else if (community.image.startsWith("/")) {
-                          comPhotoWidget = Image.file(File(community.image),
-                              fit: BoxFit.cover);
-                        } else {
-                          comPhotoWidget = Image.asset(
-                              "assets/images/IdiotLogo.png",
-                              fit: BoxFit.cover);
-                        }
+                        // Widget comPhotoWidget;
+                        // if (Uri.tryParse(community.image)?.hasAbsolutePath ==
+                        //         true &&
+                        //     (community.image.startsWith("http") ||
+                        //         community.image.startsWith("https"))) {
+                        //   comPhotoWidget =
+                        //       Image.network(community.image, fit: BoxFit.cover);
+                        // } else if (community.image.startsWith("/")) {
+                        //   comPhotoWidget = Image.file(File(community.image),
+                        //       fit: BoxFit.cover);
+                        // } else {
+                        //   comPhotoWidget = Image.asset(
+                        //       "assets/images/IdiotLogo.png",
+                        //       fit: BoxFit.cover);
+                        // }
 
                         return InkWell(
                           onTap: () {
@@ -70,7 +70,7 @@ class _MyCommunityState extends ConsumerState<MyCommunity> {
                           child: Cardcomponent.idiotCommunityCard(
                             comName: community.communityName,
                             description: community.description,
-                            comPhoto: comPhotoWidget,
+                            comPhoto: community.image,
                             comId: community.communityId,
                           ),
                         );

@@ -197,18 +197,15 @@ class _MemberProfileState extends ConsumerState<MemberProfile> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        GestureDetector(
-                          onTap: _pickImage,
-                          child: Container(
-                            height: 31,
-                            width: 31,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: ButtonComponents.myGradientLogo(
-                                Icons.edit_square),
+                        Container(
+                          height: 31,
+                          width: 31,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
                           ),
+                          child: ButtonComponents.myGradientLogo(
+                              Icons.edit_square),
                         ),
                       ],
                     ),

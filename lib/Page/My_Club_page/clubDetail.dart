@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Providers/Club/my_created_club_provider.dart';
 
 class MyClubDetail extends ConsumerStatefulWidget {
@@ -60,19 +61,12 @@ class _MyClubDetailState extends ConsumerState<MyClubDetail> {
                     borderRadius: BorderRadius.circular(150),
                   ),
                   child: ClipOval(
-                    child: clubLogo != null
-                        ? Image.file(
-                            File(clubLogo),
-                            width: 150,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            "assets/images/Capi.png",
-                            width: 150,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          ),
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      color: Colors.white,
+                      child: buildClubImage(clubLogo),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),

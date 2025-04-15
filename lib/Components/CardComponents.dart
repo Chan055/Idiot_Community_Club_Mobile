@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/TextComponents.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Providers/Creator/new_club_requests_provider.dart';
 
 class Cardcomponent {
@@ -54,11 +55,12 @@ class Cardcomponent {
           Row(
             children: [
               ClipOval(
-                child: club.logo.startsWith("http")
-                    ? Image.network(club.logo,
-                        width: 50, height: 50, fit: BoxFit.cover)
-                    : Image.file(File(club.logo),
-                        width: 50, height: 50, fit: BoxFit.cover),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  color: Colors.white,
+                  child: buildClubImage(club.logo),
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -147,7 +149,7 @@ class Cardcomponent {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "11:11",
+                    "00:00",
                     style: TextStyle(
                       color: Color(0xFF5E5C5C),
                       fontSize: 12,
@@ -219,7 +221,7 @@ class Cardcomponent {
                   child: Container(
                     height: 60,
                     width: 60,
-                    child: Image.asset("assets/images/Capi.png"),
+                    child: Image.asset("assets/images/Logo.png"),
                   ),
                 ),
                 Padding(
@@ -282,14 +284,10 @@ class Cardcomponent {
             children: [
               ClipOval(
                 child: Container(
-                  height: 60,
-                  width: 60,
-                  color: Colors.white,
-                  child: clubLogo != null
-                      ? Image.file(File(clubLogo), fit: BoxFit.cover)
-                      : Image.asset("assets/images/Capi.png",
-                          fit: BoxFit.cover),
-                ),
+                    height: 60,
+                    width: 60,
+                    color: Colors.white,
+                    child: buildClubImage(clubLogo)),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -352,7 +350,12 @@ class Cardcomponent {
             child: Row(
               children: [
                 ClipOval(
-                  child: Container(height: 60, width: 60, child: comPhoto),
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    color: Colors.white,
+                    child: buildClubImage(comPhoto),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -413,7 +416,12 @@ class Cardcomponent {
             child: Row(
               children: [
                 ClipOval(
-                  child: Container(height: 60, width: 60, child: comPhoto),
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    color: Colors.white,
+                    child: buildClubImage(comPhoto),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),

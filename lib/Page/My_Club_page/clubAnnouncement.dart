@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Providers/Club/club_announcement_provider.dart';
 import 'package:idiot_community_club_app/Providers/Club/my_created_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
@@ -61,14 +62,12 @@ class _MyClubAnnouncemntState extends ConsumerState<MyClubAnnouncemnt> {
         title: Row(
           children: [
             ClipOval(
-              child: club != null
-                  ? Image.file(
-                      File(club.clubLogo),
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    )
-                  : const Icon(Icons.image, size: 50, color: Colors.white),
+              child: Container(
+                height: 60,
+                width: 60,
+                color: Colors.white,
+                child: buildClubImage(club!.clubLogo),
+              ),
             ),
             const SizedBox(width: 10),
             Text(

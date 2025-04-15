@@ -50,19 +50,7 @@ class _CommunityMemberHomeState extends ConsumerState<CommunityMemberHome> {
                           child: Cardcomponent.idiotCommunityCardWithId(
                               comName: community.name,
                               description: community.description,
-                              comPhoto: (Uri.tryParse(community.image)
-                                              ?.hasAbsolutePath ==
-                                          true &&
-                                      (community.image.startsWith("http") ||
-                                          community.image.startsWith("https")))
-                                  ? Image.network(community.image,
-                                      fit: BoxFit.cover)
-                                  : (community.image.startsWith("/"))
-                                      ? Image.file(File(community.image),
-                                          fit: BoxFit.cover)
-                                      : Image.asset(
-                                          "assets/images/IdiotLogo.png",
-                                          fit: BoxFit.cover),
+                              comPhoto: community.image,
                               comId: community.id),
                         ),
                       );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Club/my_all_club_provider.dart';
 import 'package:idiot_community_club_app/Providers/Member/current_community_provider.dart';
@@ -90,7 +91,7 @@ class _ClubRequestState extends ConsumerState<ClubRequest> {
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Image.asset(club.clubLogo),
+                        child: buildClubImage(club.clubLogo),
                       ),
                     ),
                     Text(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
 import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
 
@@ -54,29 +55,20 @@ class _JoinedClubDetailState extends State<JoinedClubDetail> {
             child: Column(
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white, // Border color
-                      width: 2, // Border width
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white, // Border color
+                        width: 2, // Border width
+                      ),
+                      borderRadius: BorderRadius.circular(150),
                     ),
-                    borderRadius: BorderRadius.circular(150),
-                  ),
-                  child: ClipOval(
-                    child: club.clubLogo != null
-                        ? Image.file(
-                            File(club.clubLogo),
-                            width: 150,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            "assets/images/Capi.png",
-                            width: 150,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                ),
+                    child: ClipOval(
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        child: buildCommunityImage(club.clubLogo),
+                      ),
+                    )),
                 SizedBox(height: 10),
                 Center(
                   child: Text(

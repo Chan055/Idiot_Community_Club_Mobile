@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 
 import 'package:idiot_community_club_app/Providers/Creator/club_proivider.dart';
 import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
@@ -53,8 +54,7 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
                                   child: Container(
                                     height: 150,
                                     width: 150,
-                                    child:
-                                        _buildCommunityImage(community.image),
+                                    child: buildCommunityImage(community.image),
                                   ),
                                 ),
                               ),
@@ -121,14 +121,5 @@ class _CommunityHomeState extends ConsumerState<CommunityHome> {
               ],
             ),
     );
-  }
-
-  Widget _buildCommunityImage(String? imagePath) {
-    if (imagePath == null || imagePath.isEmpty) {
-      return Image.asset("assets/images/UploadImage.png", fit: BoxFit.cover);
-    } else {
-      Uint8List imageBytes = base64Decode(imagePath);
-      return Image.memory(imageBytes, fit: BoxFit.cover);
-    }
   }
 }

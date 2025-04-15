@@ -35,7 +35,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
     }
   }
 
-  Future<void> _submitClubForm() async {
+  Future<void> _submitClubForm(File image) async {
     final member = ref.read(memberProvider);
     final currentCommunity = ref.read(currentCommunityProvider);
 
@@ -45,6 +45,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
       );
       return;
     }
+    String image64Bit = await imageToBase64(image);
 
     final uri = Uri.parse("$BASE_URL/api/member/create-my-club");
     final body = {
@@ -52,7 +53,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
       "communityId": currentCommunity.communityId,
       "clubName": clubNameController.text.trim(),
       "clubDescription": descriptionController.text.trim(),
-      "clubLogo": image?.path ?? "https://example.com/gaming.jpg",
+      "clubLogo": image64Bit,
       "reasonToCreateClub": reasonController.text.trim(),
     };
 
@@ -196,7 +197,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
                           child: InkWell(
                             onTap: () {
                               if (image != null) {
-                                _submitClubForm();
+                                _submitClubForm(image!);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

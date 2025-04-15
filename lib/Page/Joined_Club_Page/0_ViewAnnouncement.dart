@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Models/Constant.dart';
 import 'package:idiot_community_club_app/Providers/Club/JoinedClubProvider.dart';
 import 'package:idiot_community_club_app/Providers/Club/current_club_provider.dart';
@@ -69,11 +70,11 @@ class _ViewAnnouncementState extends ConsumerState<ViewAnnouncement> {
           children: [
             ClipOval(
               child: club.clubLogo.contains("/")
-                  ? Image.file(
-                      File(club.clubLogo),
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
+                  ? Container(
+                      height: 60,
+                      width: 60,
+                      color: Colors.white,
+                      child: buildClubImage(club.clubLogo),
                     )
                   : const Icon(Icons.image, size: 50, color: Colors.white),
             ),

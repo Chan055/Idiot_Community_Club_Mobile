@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:idiot_community_club_app/Components/ButtonComponents.dart';
 import 'package:idiot_community_club_app/Components/CardComponents.dart';
 import 'package:idiot_community_club_app/Components/TextComponents.dart';
+import 'package:idiot_community_club_app/Helper/MyImagePicker.dart';
 import 'package:idiot_community_club_app/Providers/Creator/community_provider.dart';
 import 'package:idiot_community_club_app/Providers/Creator/creator_provider.dart';
 import 'package:idiot_community_club_app/Providers/Creator/new_club_requests_provider.dart';
@@ -61,13 +62,10 @@ class ClubCreateReview extends ConsumerWidget {
                       SizedBox(height: 5),
                       ClipOval(
                         child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: newClub.logo.startsWith("http")
-                              ? Image.network(newClub.logo, fit: BoxFit.cover)
-                              : Image.file(File(newClub.logo),
-                                  fit: BoxFit.cover),
+                          height: 60,
+                          width: 60,
+                          color: Colors.white,
+                          child: buildClubImage(newClub.logo),
                         ),
                       ),
                     ],
