@@ -30,20 +30,19 @@ class _CommunityHomeCreateState extends ConsumerState<CommunityHomeCreate> {
         await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() => image = File(pickedFile.path));
-
-      
     }
   }
 
   Future<void> _createCommunity(File image) async {
     final creator = ref.read(creatorProvider);
+    String image64bit = await imageToBase64(image);
     if (creator == null) return;
 
     final uri = Uri.parse("$BASE_URL/api/creator/create");
     final body = {
       "communityName": nameController.text.trim(),
       "description": descriptionController.text.trim(),
-      "image": imageToBase64(image),
+      "image": image64bit,
       "communityCreatorId": creator.id,
     };
 
