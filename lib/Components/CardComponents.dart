@@ -337,7 +337,7 @@ class Cardcomponent {
   static Container idiotCommunityCard(
       {required comName,
       required description,
-      required memberCount,
+      required comId,
       required comPhoto}) {
     return Container(
       height: 200,
@@ -362,14 +362,14 @@ class Cardcomponent {
                       Text(comName, style: Cardcomponent.clubTitleStyle),
                       RichText(
                         text: TextSpan(
-                          text: "Community Member ",
+                          text: "Community Id : ",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 10,
                           ),
                           children: [
                             TextSpan(
-                              text: "$memberCount",
+                              text: "$comId",
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12,

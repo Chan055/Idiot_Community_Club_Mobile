@@ -71,7 +71,7 @@ class _MyCommunityState extends ConsumerState<MyCommunity> {
                             comName: community.communityName,
                             description: community.description,
                             comPhoto: comPhotoWidget,
-                            memberCount: community.memberCount,
+                            comId: community.communityId,
                           ),
                         );
                       }).toList(),

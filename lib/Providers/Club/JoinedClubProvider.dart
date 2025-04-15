@@ -21,7 +21,7 @@ Future<void> fetchJoinedClubs(
     ref.read(joinedClubsProvider.notifier).state = clubs;
   } else {
     print("This is error");
-    ref.read(joinedClubsProvider.notifier).state = [];
+    // ref.read(joinedClubsProvider.notifier).state = [];
   }
 }
 
