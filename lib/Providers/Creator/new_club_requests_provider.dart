@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:idiot_community_club_app/Models/Constant.dart';
-
 
 enum RequestStatus { APPROVED, REJECTED }
 
@@ -38,11 +36,9 @@ Future<void> sendClubDecision({
   );
 }
 
-
-
-
 Future<void> fetchNewClubRequests(WidgetRef ref, int communityId) async {
-  final uri = Uri.parse("$BASE_URL/api/creator/view-all-new-club-request?communityId=$communityId");
+  final uri = Uri.parse(
+      "$BASE_URL/api/creator/view-all-new-club-request?communityId=$communityId");
   final response = await http.get(uri);
   final data = jsonDecode(response.body);
 
@@ -50,18 +46,21 @@ Future<void> fetchNewClubRequests(WidgetRef ref, int communityId) async {
     final List<NewClubRequest> requests = (data['data'] as List)
         .map((item) => NewClubRequest.fromJson(item))
         .toList();
-    ref.read(newClubRequestProvider.notifier).state = requests;
+
+    if (ref.context.mounted) {
+      ref.read(newClubRequestProvider.notifier).state = requests;
+    }
+    // ref.read(newClubRequestProvider.notifier).state = requests;
   } else {
     print("Error: ${data["message"]}");
-    ref.read(newClubRequestProvider.notifier).state = [];
+    if (ref.context.mounted) {
+      ref.read(newClubRequestProvider.notifier).state = [];
+    }
+    // ref.read(newClubRequestProvider.notifier).state = [];
   }
 }
 
-
-
-
 final newClubRequestProvider = StateProvider<List<NewClubRequest>>((ref) => []);
-
 
 class NewClubRequest {
   final int requestId;

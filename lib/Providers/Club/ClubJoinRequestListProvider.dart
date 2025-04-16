@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -42,7 +39,6 @@ Future<void> sendNewClubJoinDecision({
   );
 }
 
-
 Future<void> fetchClubJoinRequests(WidgetRef ref, int clubId) async {
   final uri = Uri.parse("$BASE_URL/api/leader/view-club-join-request/$clubId");
   final response = await http.get(uri);
@@ -51,15 +47,22 @@ Future<void> fetchClubJoinRequests(WidgetRef ref, int clubId) async {
   if (resBody["success"] == true) {
     final List<dynamic> data = resBody["data"];
     final requests = data.map((e) => ClubJoinRequest.fromJson(e)).toList();
-    ref.read(clubJoinRequestsProvider.notifier).state = List<ClubJoinRequest>.from(requests);
+    if (ref.context.mounted) {
+      ref.read(clubJoinRequestsProvider.notifier).state =
+          List<ClubJoinRequest>.from(requests);
+    }
+    // ref.read(clubJoinRequestsProvider.notifier).state = List<ClubJoinRequest>.from(requests);
   } else {
     print("Error: ${resBody["message"]}");
-    ref.read(clubJoinRequestsProvider.notifier).state = [];
+    if (ref.context.mounted) {
+      ref.read(clubJoinRequestsProvider.notifier).state = [];
+    }
+    // ref.read(clubJoinRequestsProvider.notifier).state = [];
   }
 }
 
-
-final clubJoinRequestsProvider = StateProvider<List<ClubJoinRequest>>((ref) => []);
+final clubJoinRequestsProvider =
+    StateProvider<List<ClubJoinRequest>>((ref) => []);
 
 class ClubJoinRequest {
   final int requestId;

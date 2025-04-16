@@ -33,7 +33,7 @@ final clubAnnouncementProvider =
   final uri = Uri.parse("$BASE_URL/api/leader/view-own-post/$leaderId/$clubId");
   final response = await http.get(uri);
   final data = jsonDecode(response.body);
-  print(data);
+  // print(data);
 
   if (data['success'] == true) {
     final List<ClubAnnouncement> announcements = (data['data'] as List)
@@ -41,7 +41,7 @@ final clubAnnouncementProvider =
         .toList();
     return announcements;
   } else {
-    print("leaderId: $leaderId, clubId: $clubId");
+    // print("leaderId: $leaderId, clubId: $clubId");
     throw Exception(data["message"]);
   }
 });

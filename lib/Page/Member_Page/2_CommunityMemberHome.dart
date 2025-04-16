@@ -18,12 +18,18 @@ class _CommunityMemberHomeState extends ConsumerState<CommunityMemberHome> {
   @override
   void initState() {
     super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (ref.context.mounted) {
+    //     fetchViewCommunities(ref);
+    //   }
+    // });
     fetchViewCommunities(ref);
   }
 
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
+
     final viewCommunities = ref.watch(viewCommunityStateProvider);
 
     return Scaffold(

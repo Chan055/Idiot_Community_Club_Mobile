@@ -49,6 +49,8 @@ class _CommunityMemberRequestState
       print("Response: $resBody");
 
       if (resBody["success"] == true) {
+        if (!ref.context.mounted) return;
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("✅ Request sent successfully")),
         );

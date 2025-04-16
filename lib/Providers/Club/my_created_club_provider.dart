@@ -48,7 +48,10 @@ Future<void> fetchMyCreatedClub(WidgetRef ref, leaderId, communityId) async {
 
   if (response.statusCode == 200 && body['success'] == true) {
     final club = MyCreatedClubModel.fromJson(body['data']);
-    ref.read(myCreatedClubStateProvider.notifier).state = club;
+    if (ref.context.mounted) {
+      ref.read(myCreatedClubStateProvider.notifier).state = club;
+    }
+    // ref.read(myCreatedClubStateProvider.notifier).state = club;
   } else {
     throw Exception(body['message'] ?? 'Failed to fetch club');
   }

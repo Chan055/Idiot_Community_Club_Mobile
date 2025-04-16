@@ -15,17 +15,25 @@ class ClubHome extends ConsumerStatefulWidget {
 class _ClubHomeState extends ConsumerState<ClubHome> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final currentCommunity = ref.read(currentCommunityProvider);
+    if (currentCommunity != null) {
+      fetchMyClubs(ref, currentCommunity.communityId);
+    }
   }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   final currentCommunity = ref.read(currentCommunityProvider);
+  // }
 
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
     final clubs = ref.watch(clubListProvider);
-    final currentCommunity = ref.read(currentCommunityProvider);
-    fetchMyClubs(ref, currentCommunity!.communityId);
+    // final currentCommunity = ref.read(currentCommunityProvider);
+    // fetchMyClubs(ref, currentCommunity!.communityId);
 
     return Scaffold(
       backgroundColor: Colors.white,

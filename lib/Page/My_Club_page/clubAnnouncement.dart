@@ -33,7 +33,10 @@ class _MyClubAnnouncemntState extends ConsumerState<MyClubAnnouncemnt> {
         communityId: communityId,
         message: messageController.text.trim(),
       );
-      messageController.clear();
+      if (ref.context.mounted) {
+        messageController.clear();
+      }
+      // messageController.clear();
     }
   }
 

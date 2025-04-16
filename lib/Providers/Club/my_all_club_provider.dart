@@ -13,7 +13,10 @@ Future<void> fetchMyClubs(WidgetRef ref, int communityId) async {
   if (data['success'] == true) {
     final List<Club> clubs =
         (data['data'] as List).map((club) => Club.fromJson(club)).toList();
-    ref.read(clubListProvider.notifier).state = clubs;
+    if (ref.context.mounted) {
+      ref.read(clubListProvider.notifier).state = clubs;
+    }
+    // ref.read(clubListProvider.notifier).state = clubs;
   }
 }
 

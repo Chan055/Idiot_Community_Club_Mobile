@@ -28,7 +28,10 @@ class _CommunityMemberrequestState extends ConsumerState<ClubMemberRequest> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final club = ref.watch(myCreatedClubStateProvider);
       if (club != null) {
-        fetchClubJoinRequests(ref, club.clubId);
+        if (ref.context.mounted) {
+          fetchClubJoinRequests(ref, club.clubId);
+        }
+        // fetchClubJoinRequests(ref, club.clubId);
       }
     });
   }
@@ -204,8 +207,7 @@ class ListTileComponent_2 {
                                   requestStatus: RequestStatus.APPROVED,
                                   context: context,
                                 );
-                                fetchClubJoinRequests(
-                                    ref, club.clubId);
+                                fetchClubJoinRequests(ref, club.clubId);
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -259,8 +261,7 @@ class ListTileComponent_2 {
                                   requestStatus: RequestStatus.REJECTED,
                                   context: context,
                                 );
-                                fetchClubJoinRequests(
-                                    ref, club.clubId);
+                                fetchClubJoinRequests(ref, club.clubId);
                               }
                             },
                             style: ElevatedButton.styleFrom(

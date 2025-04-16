@@ -13,16 +13,15 @@ class MyClubMember extends ConsumerStatefulWidget {
 }
 
 class _MyClubMemberState extends ConsumerState<MyClubMember> {
-
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final club = ref.watch(myCreatedClubStateProvider);
-      final leader= ref.watch(memberProvider);
-      if (club != null && leader!=null) {
+      final leader = ref.watch(memberProvider);
+      //add ref here
+      if (club != null && leader != null && ref.context.mounted) {
         fetchClubMembers(ref, leader.id, club.clubId);
       }
     });
@@ -30,7 +29,7 @@ class _MyClubMemberState extends ConsumerState<MyClubMember> {
 
   @override
   Widget build(BuildContext context) {
-    final members=ref.watch(clubMembersProvider);
+    final members = ref.watch(clubMembersProvider);
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -49,7 +48,6 @@ class _MyClubMemberState extends ConsumerState<MyClubMember> {
           ),
         ),
         title: Text("Club Members", style: TextStyle(color: Colors.white)),
-
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -60,39 +58,34 @@ class _MyClubMemberState extends ConsumerState<MyClubMember> {
           ),
         ),
       ),
-      body:
-          members.length > 0
-              ? ListView.builder(
-                itemCount: members.length,
-                itemBuilder:
-                    (context, index) =>
-                        getListTile(members[index]),
-              )
-              : Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                ),
+      body: members.length > 0
+          ? ListView.builder(
+              itemCount: members.length,
+              itemBuilder: (context, index) => getListTile(members[index]),
+            )
+          : Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
               ),
+            ),
     );
   }
 }
 
-
-  Widget getListTile(ClubMember user) {
-
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          radius: 25,
-          backgroundImage:
-              getUserImage(user.profileImage), // Local image fallback
-          onBackgroundImageError:
-              (_, __) => const Icon(Icons.person, size: 30, color: Colors.grey),
-        ),
-        title: Text(
-          "${user.userName}",
-        ),
-        trailing: Icon(Icons.more_vert, size: 25, color: Colors.black45),
+Widget getListTile(ClubMember user) {
+  return Card(
+    child: ListTile(
+      leading: CircleAvatar(
+        radius: 25,
+        backgroundImage:
+            getUserImage(user.profileImage), // Local image fallback
+        onBackgroundImageError: (_, __) =>
+            const Icon(Icons.person, size: 30, color: Colors.grey),
       ),
-    );
-  }
+      title: Text(
+        "${user.userName}",
+      ),
+      trailing: Icon(Icons.more_vert, size: 25, color: Colors.black45),
+    ),
+  );
+}

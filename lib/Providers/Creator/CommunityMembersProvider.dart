@@ -25,10 +25,12 @@ class CommunityMember {
 }
 
 // Provider
-final communityMembersProvider = StateProvider<List<CommunityMember>>((ref) => []);
+final communityMembersProvider =
+    StateProvider<List<CommunityMember>>((ref) => []);
 
 // Fetch function
-Future<void> fetchCommunityMembers(WidgetRef ref, int communityId, int creatorId) async {
+Future<void> fetchCommunityMembers(
+    WidgetRef ref, int communityId, int creatorId) async {
   final url = Uri.parse(
     '$BASE_URL/api/creator/view-all-member-list?communityId=$communityId&creatorId=$creatorId',
   );
@@ -37,9 +39,17 @@ Future<void> fetchCommunityMembers(WidgetRef ref, int communityId, int creatorId
 
   if (data['success'] == true) {
     final List membersJson = data['data'];
-    final members = membersJson.map((e) => CommunityMember.fromJson(e)).toList();
-    ref.read(communityMembersProvider.notifier).state = List<CommunityMember>.from(members);
+    final members =
+        membersJson.map((e) => CommunityMember.fromJson(e)).toList();
+    if (ref.context.mounted) {
+      ref.read(communityMembersProvider.notifier).state =
+          List<CommunityMember>.from(members);
+    }
+    // ref.read(communityMembersProvider.notifier).state = List<CommunityMember>.from(members);
   } else {
-    ref.read(communityMembersProvider.notifier).state = [];
+    if (ref.context.mounted) {
+      ref.read(communityMembersProvider.notifier).state = [];
+    }
+    // ref.read(communityMembersProvider.notifier).state = [];
   }
 }

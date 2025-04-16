@@ -19,7 +19,8 @@ class _MyCommunityState extends ConsumerState<MyCommunity> {
   void initState() {
     super.initState();
     final member = ref.read(memberProvider);
-    if (member != null) {
+    //Add ref here
+    if (member != null && ref.context.mounted) {
       fetchMyCommunity(ref, member.id);
     }
   }

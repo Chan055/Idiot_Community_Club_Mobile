@@ -11,11 +11,20 @@ Future<void> fetchJoinedClubMembers(WidgetRef ref, int clubId) async {
   if (data['success'] == true) {
     final List membersJson = data['data'];
     final members = membersJson.map((e) => ClubMember.fromJson(e)).toList();
-    ref.read(joinedClubMembersProvider.notifier).state =
-        List<ClubMember>.from(members);
+
+    if (ref.context.mounted) {
+      ref.read(joinedClubMembersProvider.notifier).state =
+          List<ClubMember>.from(members);
+    }
+
+    // ref.read(joinedClubMembersProvider.notifier).state =
+    //     List<ClubMember>.from(members);
   } else {
     print("${data['message']}");
-    ref.read(joinedClubMembersProvider.notifier).state = [];
+    if (ref.context.mounted) {
+      ref.read(joinedClubMembersProvider.notifier).state = [];
+    }
+    // ref.read(joinedClubMembersProvider.notifier).state = [];
   }
 }
 
