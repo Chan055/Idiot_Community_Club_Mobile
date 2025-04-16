@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="four.idiot.communityclub.idiot_community_club_app"
-    android:versionCode="3"
-    android:versionName="1.0.2" >
+    android:versionCode="4"
+    android:versionName="1.0.3" >
 
     <uses-sdk
         android:minSdkVersion="21"
         android:targetSdkVersion="35" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <!--
          Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
@@ -33,7 +35,8 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:extractNativeLibs="true"
         android:icon="@mipmap/launcher_icon"
-        android:label="idiot_community_club_app" >
+        android:label="idiot_community_club_app"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="four.idiot.communityclub.idiot_community_club_app.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

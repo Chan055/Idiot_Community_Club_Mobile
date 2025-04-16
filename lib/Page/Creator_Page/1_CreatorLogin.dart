@@ -121,13 +121,13 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
                           setState(() => showPassword = !showPassword);
                         },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          gradientText("Forget Password?", 12, FontWeight.bold),
-                          SizedBox(width: 15),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: [
+                      //     gradientText("Forget Password?", 12, FontWeight.bold),
+                      //     SizedBox(width: 15),
+                      //   ],
+                      // ),
                       SizedBox(height: 10),
                       InkWell(
                         onTap: loginUser,
