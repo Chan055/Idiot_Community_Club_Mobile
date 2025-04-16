@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 
-const String BASE_URL = "http://13.211.126.56";
+const String BASE_URL = "http://3.106.58.122";
 
 ImageProvider getUserImage(String? photoPath) {
   if (photoPath == null || photoPath.isEmpty) {
