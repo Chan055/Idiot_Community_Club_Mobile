@@ -36,6 +36,8 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
     final resBody = jsonDecode(response.body);
     print(resBody);
 
+    if (!mounted) return; // ✅ add check here
+
     if (resBody["success"] == true) {
       print(ref.watch(creatorProvider)?.name);
       ref.read(creatorProvider.notifier).state =
@@ -45,6 +47,8 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
             Community.fromJson(resBody["data"]["communityInfo"]);
       }
       print(ref.watch(creatorProvider)?.name);
+
+      if (!mounted) return; // ✅ safety before UI interaction
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("✅ ${resBody["message"]}")),
       );
@@ -52,10 +56,12 @@ class _LoginPageState extends ConsumerState<CreatorLogin> {
       ref.read(creatorProvider.notifier).state =
           Creator.fromJson(resBody["data"]);
 
+      if (!mounted) return; // ✅ safety before navigation
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/creatorMain');
       });
     } else {
+      if (!mounted) return; // ✅ safety before showing snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Login failed: ${resBody["message"]}")),
       );

@@ -40,6 +40,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
     final currentCommunity = ref.read(currentCommunityProvider);
 
     if (member == null || currentCommunity == null) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("❌ Missing user or community info")),
       );
@@ -65,10 +66,12 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
 
     final resBody = jsonDecode(response.body);
     if (resBody["success"] == true) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Success ${resBody["message"]}")),
       );
     } else {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed: ${resBody["message"]}")),
       );
@@ -199,6 +202,7 @@ class _MyClubFormState extends ConsumerState<MyClubForm> {
                               if (image != null) {
                                 _submitClubForm(image!);
                               } else {
+                                if (!mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
