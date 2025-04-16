@@ -15,7 +15,9 @@ Future<void> fetchMyCommunity(WidgetRef ref, int memberId) async {
     final List<MyCommunityModel> myCommunities = (data['data'] as List)
         .map((community) => MyCommunityModel.fromJson(community))
         .toList();
-    ref.read(myCommunityListProvider.notifier).state = myCommunities;
+    if (ref.context.mounted) {
+      ref.read(myCommunityListProvider.notifier).state = myCommunities;
+    }
   }
 }
 

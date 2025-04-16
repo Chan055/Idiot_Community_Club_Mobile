@@ -26,7 +26,10 @@ class _JoinedClubState extends ConsumerState<JoinedClub> {
         await fetchJoinedClubs(ref, member.id, community.communityId);
       }
     });
-    setState(() => isLoading = false);
+    if (mounted) {
+      isLoading = false;
+    }
+    // setState(() => isLoading = false);
   }
 
   @override

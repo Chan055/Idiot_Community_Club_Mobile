@@ -55,17 +55,23 @@ Future<void> fetchJoinRequests(WidgetRef ref, int communityId) async {
   final uri = Uri.parse(
       '$BASE_URL/api/creator/view-join-request?communityId=$communityId');
   final response = await http.get(uri);
+  if (ref.context.mounted == false) return;
 
   final resBody = jsonDecode(response.body);
   if (resBody['success'] == true) {
     final List<dynamic> data = resBody['data'];
     final requests = data.map((item) => JoinRequest.fromJson(item)).toList();
-    ref.read(joinRequestProvider.notifier).state =
-        List<JoinRequest>.from(requests);
+
+    if (ref.context.mounted) {
+      ref.read(joinRequestProvider.notifier).state =
+          List<JoinRequest>.from(requests);
+    }
   } else {
-    // Optionally handle errors
     print("Error: ${resBody["message"]}");
-    ref.read(joinRequestProvider.notifier).state = [];
+    if (ref.context.mounted) {
+      ref.read(joinRequestProvider.notifier).state = [];
+    }
+    // Optionally handle errors
   }
 }
 

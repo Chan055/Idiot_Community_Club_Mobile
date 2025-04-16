@@ -18,10 +18,14 @@ Future<void> fetchJoinedClubs(
     final List<Club> clubs = (data['data'] as List)
         .map((clubJson) => Club.fromJson(clubJson))
         .toList();
-    ref.read(joinedClubsProvider.notifier).state = clubs;
+    if (ref.context.mounted) {
+      ref.read(joinedClubsProvider.notifier).state = clubs;
+    }
   } else {
     print("This is error");
-    ref.read(joinedClubsProvider.notifier).state = [];
+    if (ref.context.mounted) {
+      ref.read(joinedClubsProvider.notifier).state = [];
+    }
   }
 }
 

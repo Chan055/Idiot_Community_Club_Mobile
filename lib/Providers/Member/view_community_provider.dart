@@ -10,13 +10,18 @@ Future<void> fetchViewCommunities(WidgetRef ref) async {
   final uri = Uri.parse('$BASE_URL/api/member/view-all-communities');
   final response = await http.get(uri);
 
+  // if (ref.context.mounted == false) return;
+
   if (response.statusCode == 200) {
     final resBody = jsonDecode(response.body);
     if (resBody['success'] == true) {
       List<dynamic> rawList = resBody['data'];
       final communities =
           rawList.map((e) => ViewCommunity.fromJson(e)).toList();
-      ref.read(viewCommunityStateProvider.notifier).state = communities;
+
+      if (ref.context.mounted) {
+        ref.read(viewCommunityStateProvider.notifier).state = communities;
+      }
     } else {
       throw Exception(resBody['message'] ?? 'API returned false success');
     }
